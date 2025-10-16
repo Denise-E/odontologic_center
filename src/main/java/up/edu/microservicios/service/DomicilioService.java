@@ -1,11 +1,12 @@
-package service;
+package up.edu.microservicios.service;
 
-import dao.iDao;
-import model.Domicilio;
-import model.Paciente;
+import up.edu.microservicios.dao.iDao;
+import up.edu.microservicios.model.Domicilio;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DomicilioService implements iService<Domicilio> {
     private iDao<Domicilio> domicilioDao;
 

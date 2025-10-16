@@ -1,11 +1,8 @@
-package dao;
-
-import model.Domicilio;
+package up.edu.microservicios.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.time.LocalDate;
 
 public class BD {
     private static final String SQL_DROP_CREATE_DOMCILIOS="DROP TABLE IF EXISTS DOMICILIOS; CREATE TABLE DOMICILIOS(ID INT AUTO_INCREMENT PRIMARY KEY, CALLE VARCHAR(100) NOT NULL, NUMERO INT NOT NULL, LOCALIDAD VARCHAR(100) NOT NULL, PROVINCIA VARCHAR(100) NOT NULL)";

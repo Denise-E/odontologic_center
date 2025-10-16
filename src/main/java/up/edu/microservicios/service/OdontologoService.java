@@ -1,11 +1,12 @@
-package service;
+package up.edu.microservicios.service;
 
-import dao.iDao;
-import model.Odontologo;
-import model.Paciente;
+import up.edu.microservicios.dao.iDao;
+import up.edu.microservicios.model.Odontologo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OdontologoService implements iService<Odontologo> {
     private iDao<Odontologo> odontologoDao;
 

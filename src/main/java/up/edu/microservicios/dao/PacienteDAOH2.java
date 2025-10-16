@@ -1,12 +1,14 @@
-package dao;
+package up.edu.microservicios.dao;
 
-import model.Domicilio;
-import model.Paciente;
+import up.edu.microservicios.model.Domicilio;
+import up.edu.microservicios.model.Paciente;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class PacienteDAOH2 implements iDao<Paciente>{
     private static final String SQL_SELECT_ONE=" SELECT * FROM PACIENTES WHERE ID=?";
     private static final String SQL_SELECT_ALL=" SELECT * FROM PACIENTES";
@@ -66,7 +68,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
         }catch (Exception e){
             e.getMessage();
         }
-        System.out.println("paciente encontrado");
+        System.out.println("Paciente encontrado: " +paciente);
         return paciente;
     }
 

@@ -1,6 +1,7 @@
-package dao;
+package up.edu.microservicios.dao;
 
-import model.Odontologo;
+import up.edu.microservicios.model.Odontologo;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class OdontologoDAOH2 implements iDao<Odontologo> {
     private static final String SQL_SELECT_ONE=" SELECT * FROM ODONTOLOGOS WHERE ID=?";
     private static final String SQL_SELECT_ALL=" SELECT * FROM ODONTOLOGOS";

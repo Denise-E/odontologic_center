@@ -1,4 +1,4 @@
-package model;
+package up.edu.microservicios.model;
 
 public class Domicilio {
     private Integer id;

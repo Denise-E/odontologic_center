@@ -1,0 +1,7 @@
+
+> log4j file implementation
+
+> log4j cambiar sysos por logs (LOGGER.xxxx)
+
+> Springboot + lombook
+

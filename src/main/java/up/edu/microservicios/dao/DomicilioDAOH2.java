@@ -1,6 +1,7 @@
-package dao;
+package up.edu.microservicios.dao;
 
-import model.Domicilio;
+import up.edu.microservicios.model.Domicilio;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
 public class DomicilioDAOH2 implements iDao<Domicilio> {
     private static final String SQL_DOMICILIOS="SELECT * FROM DOMICILIOS WHERE ID=?";
     private static final String SQL_INSERT_ONE = "INSERT INTO DOMICILIOS (calle, numero, localidad, provincia) VALUES (?,?,?,?)";

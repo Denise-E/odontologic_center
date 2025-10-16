@@ -1,6 +1,4 @@
-package service;
-
-import model.Paciente;
+package up.edu.microservicios.service;
 
 import java.util.List;
 

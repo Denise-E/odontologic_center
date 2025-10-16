@@ -1,4 +1,4 @@
-package dao;
+package up.edu.microservicios.dao;
 
 import java.util.List;
 
