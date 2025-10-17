@@ -1,11 +1,8 @@
 
-> log4j cambiar sysos por logs (LOGGER.xxxx)
-
 > Fix tests
-
-> Ver la carpeta de resources del profe -> application.properties + log4j.properties
 
 > Ver front del profe
 
+
 > Endpoints actuales:
-    * /api/pacientes/{id}
+    * /api/pacientes/{id} -> RETORNO VACIO ANTE 404
