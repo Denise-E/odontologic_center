@@ -1,8 +1,10 @@
 
 > Fix tests
 
-> Ver front del profe
-
+> Ajustar front del profe
 
 > Endpoints actuales:
     * /api/pacientes/{id} -> RETORNO VACIO ANTE 404
+
+
+> TODO Terminar CRUD Pacientes y Odontologos (Hacer backend por lo menos)
