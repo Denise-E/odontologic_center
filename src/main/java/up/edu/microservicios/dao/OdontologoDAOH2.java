@@ -1,5 +1,6 @@
 package up.edu.microservicios.dao;
 
+import org.apache.log4j.Logger;
 import up.edu.microservicios.model.Odontologo;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Repository
 public class OdontologoDAOH2 implements iDao<Odontologo> {
+    private static final Logger LOGGER= Logger.getLogger(OdontologoDAOH2.class);
+
     private static final String SQL_SELECT_ONE=" SELECT * FROM ODONTOLOGOS WHERE ID=?";
     private static final String SQL_SELECT_ALL=" SELECT * FROM ODONTOLOGOS";
     private static final String SQL_UPDATE_BY_ID = "UPDATE ODONTOLOGOS SET NOMBRE=?, APELLIDO=?, MATRICULA=?, REQUISITOSTURNOS=? WHERE ID=?";
@@ -41,7 +44,7 @@ public class OdontologoDAOH2 implements iDao<Odontologo> {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return odontologo;
     }
@@ -67,7 +70,7 @@ public class OdontologoDAOH2 implements iDao<Odontologo> {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return odontologo;
     }
@@ -83,10 +86,9 @@ public class OdontologoDAOH2 implements iDao<Odontologo> {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
-
-        System.out.println("Odontologo con id " + id + " eliminado");
+        LOGGER.info("Odontologo con id " + id + " eliminado");
     }
 
     @Override
@@ -105,7 +107,7 @@ public class OdontologoDAOH2 implements iDao<Odontologo> {
 
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -131,7 +133,7 @@ public class OdontologoDAOH2 implements iDao<Odontologo> {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return odontologos;

@@ -1,5 +1,6 @@
 package up.edu.microservicios.dao;
 
+import org.apache.log4j.Logger;
 import up.edu.microservicios.model.Domicilio;
 import up.edu.microservicios.model.Paciente;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Repository
 public class PacienteDAOH2 implements iDao<Paciente>{
+    private static final Logger LOGGER= Logger.getLogger(PacienteDAOH2.class);
+
     private static final String SQL_SELECT_ONE=" SELECT * FROM PACIENTES WHERE ID=?";
     private static final String SQL_SELECT_ALL=" SELECT * FROM PACIENTES";
     private static final String SQL_UPDATE_BY_ID = "UPDATE PACIENTES SET NOMBRE=?, APELLIDO=?, NUMEROCONTACTO=?, FECHAINGRESO=?, DOMICILIO_ID=?, EMAIL=? WHERE ID=?";
@@ -41,7 +44,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return paciente;
     }
@@ -68,7 +71,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
         }catch (Exception e){
             e.getMessage();
         }
-        System.out.println("Paciente encontrado: " +paciente);
+        LOGGER.debug("Paciente encontrado: " +paciente);
         return paciente;
     }
 
@@ -81,9 +84,10 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             ps_delete.setInt(1, id);
             ps_delete.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
-        System.out.println("Paciente con id " + id + " eliminado");
+
+        LOGGER.debug("Paciente eliminado: " +id);
     }
 
     @Override
@@ -102,9 +106,9 @@ public class PacienteDAOH2 implements iDao<Paciente>{
 
             ps_update.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
-        System.out.println("Paciente con id " + paciente.getId() + "actualizado");
+        LOGGER.debug("Paciente actualizado: " +paciente.getId());
     }
 
     @Override
@@ -127,9 +131,9 @@ public class PacienteDAOH2 implements iDao<Paciente>{
                 pacientes.add(p);
             }
         }catch (Exception e){
-            e.getMessage();
+            LOGGER.error(e.getMessage());
         }
-        System.out.println("pacientes encontrado");
+        LOGGER.debug("Pacientes encontrados: " +pacientes.size());
         return pacientes;
     }
 }

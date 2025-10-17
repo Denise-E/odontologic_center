@@ -9,8 +9,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+
 @Repository
 public class DomicilioDAOH2 implements iDao<Domicilio> {
+    private static final Logger LOGGER = Logger.getLogger(DomicilioDAOH2.class);
+
     private static final String SQL_DOMICILIOS="SELECT * FROM DOMICILIOS WHERE ID=?";
     private static final String SQL_INSERT_ONE = "INSERT INTO DOMICILIOS (calle, numero, localidad, provincia) VALUES (?,?,?,?)";
 
@@ -35,9 +40,9 @@ public class DomicilioDAOH2 implements iDao<Domicilio> {
                 domicilio.setId(keys.getInt(1));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
-        System.out.println("Domicilio guardado con id: " + domicilio.getId());
+        LOGGER.info("Domicilio guardado con id " + domicilio.getId());
         return domicilio;
     }
 
@@ -56,9 +61,10 @@ public class DomicilioDAOH2 implements iDao<Domicilio> {
             }
 
         }catch (Exception e){
-            e.getMessage();
+            LOGGER.error(e.getMessage());
         }
-        System.out.println("domicilio encontrado");
+
+        LOGGER.info("Domicilio buscado con id " + domicilio.getId());
         return domicilio;
     }
 
