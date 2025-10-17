@@ -1,6 +1,4 @@
 
-> log4j file implementation del profe (ya configure en Maven)
-
 > log4j cambiar sysos por logs (LOGGER.xxxx)
 
 > Fix tests
