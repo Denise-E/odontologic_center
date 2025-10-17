@@ -1,7 +1,13 @@
 
-> log4j file implementation
+> log4j file implementation del profe (ya configure en Maven)
 
 > log4j cambiar sysos por logs (LOGGER.xxxx)
 
-> Springboot + lombook
+> Fix tests
 
+> Ver la carpeta de resources del profe -> application.properties + log4j.properties
+
+> Ver front del profe
+
+> Endpoints actuales:
+    * /api/pacientes/{id}
