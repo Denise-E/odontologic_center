@@ -23,31 +23,64 @@ public class PacienteDAOH2 implements iDao<Paciente>{
     @Override
     public Paciente guardar(Paciente paciente) {
         Connection connection = null;
+
         try {
             connection = BD.getConnection();
+            connection.setAutoCommit(false);
 
-            PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+            String sqlDomicilio = "INSERT INTO DOMICILIOS (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
+            PreparedStatement psDomicilio = connection.prepareStatement(sqlDomicilio, Statement.RETURN_GENERATED_KEYS);
+            psDomicilio.setString(1, paciente.getDomicilio().getCalle());
+            psDomicilio.setInt(2, paciente.getDomicilio().getNumero());
+            psDomicilio.setString(3, paciente.getDomicilio().getLocalidad());
+            psDomicilio.setString(4, paciente.getDomicilio().getProvincia());
+            psDomicilio.executeUpdate();
 
-            ps.setString(1, paciente.getNombre());
-            ps.setString(2, paciente.getApellido());
-            ps.setLong(3, paciente.getNumeroContacto());
-            ps.setDate(4, Date.valueOf(paciente.getFechaIngreso())); // si tu atributo es LocalDate
-            ps.setInt(5, paciente.getDomicilio().getId());
-            ps.setString(6, paciente.getEmail());
+            ResultSet rsDomicilio = psDomicilio.getGeneratedKeys();
+            Integer domicilioId = null;
+            if (rsDomicilio.next()) {
+                domicilioId = rsDomicilio.getInt(1);
+                paciente.getDomicilio().setId(domicilioId);
+            }
+            psDomicilio.close();
 
-            ps.executeUpdate();
+            String sqlPaciente = "INSERT INTO PACIENTES (NOMBRE, APELLIDO, NUMEROCONTACTO, FECHAINGRESO, DOMICILIO_ID, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement psPaciente = connection.prepareStatement(sqlPaciente, Statement.RETURN_GENERATED_KEYS);
+            psPaciente.setString(1, paciente.getNombre());
+            psPaciente.setString(2, paciente.getApellido());
+            psPaciente.setLong(3, paciente.getNumeroContacto());
+            psPaciente.setDate(4, Date.valueOf(paciente.getFechaIngreso()));
+            psPaciente.setInt(5, domicilioId);
+            psPaciente.setString(6, paciente.getEmail());
+            psPaciente.executeUpdate();
 
-            // Obtener la clave primaria generada
-            ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) {
-                paciente.setId(keys.getInt(1));
+            ResultSet rsPaciente = psPaciente.getGeneratedKeys();
+            if (rsPaciente.next()) {
+                paciente.setId(rsPaciente.getInt(1));
             }
 
+            psPaciente.close();
+            connection.commit();
+            LOGGER.info("Paciente guardado con ID: " + paciente.getId());
+
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            try {
+                if (connection != null) connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            LOGGER.error("Error guardando paciente", e);
+        } finally {
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return paciente;
     }
+
 
     @Override
     public Paciente buscar(Integer id) {
