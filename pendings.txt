@@ -6,5 +6,6 @@
 > Endpoints actuales:
     * /api/pacientes/{id} -> RETORNO VACIO ANTE 404
 
+> @Autowired en Controller
 
 > TODO Terminar CRUD Pacientes y Odontologos (Hacer backend por lo menos)

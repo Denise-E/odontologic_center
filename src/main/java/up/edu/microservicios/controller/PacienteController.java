@@ -1,15 +1,14 @@
 package up.edu.microservicios.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.*;
 import up.edu.microservicios.model.Paciente;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import up.edu.microservicios.service.PacienteService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController // sin vista
 @RequestMapping("/api/pacientes") // todo lo que venga de endpoints de pacientes
@@ -45,4 +44,26 @@ public class PacienteController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping()
+    public ResponseEntity<Paciente> crearPaciente(@RequestBody Paciente paciente){
+        LOGGER.info("Creando paciente: "+paciente);
+        Paciente pacienteCreado = pacienteService.guardar(paciente);
+
+        LOGGER.info("Paciente creado: "+pacienteCreado);
+        if(pacienteCreado != null){
+            return ResponseEntity.ok(pacienteCreado);
+        }
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> eliminarPaciente(@PathVariable Integer id){
+        LOGGER.info("Eliminando paciente: "+id);
+        pacienteService.eliminar(id);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Paciente eliminado exitosamente");
+
+        return ResponseEntity.ok(response);    }
 }

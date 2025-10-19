@@ -30,6 +30,8 @@ public class Paciente {
         this.email = email;
     }
 
+    public Paciente() {}
+
     public Integer getId() {
         return id;
     }
