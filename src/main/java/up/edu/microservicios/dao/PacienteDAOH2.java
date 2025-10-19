@@ -44,8 +44,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             }
             psDomicilio.close();
 
-            String sqlPaciente = "INSERT INTO PACIENTES (NOMBRE, APELLIDO, NUMEROCONTACTO, FECHAINGRESO, DOMICILIO_ID, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement psPaciente = connection.prepareStatement(sqlPaciente, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement psPaciente = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             psPaciente.setString(1, paciente.getNombre());
             psPaciente.setString(2, paciente.getApellido());
             psPaciente.setLong(3, paciente.getNumeroContacto());
@@ -67,6 +66,8 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException ex) {
+                LOGGER.error(ex.getMessage(), ex);
+                LOGGER.error(ex.getMessage(), ex);
                 ex.printStackTrace();
             }
             LOGGER.error("Error guardando paciente", e);

@@ -4,7 +4,8 @@
 > Ajustar front del profe
 
 > Endpoints actuales:
-    * /api/pacientes/{id} -> RETORNO VACIO ANTE 404
+    * Mejorar casos de Error
+    * FIX POST Pacientes
 
 > @Autowired en Controller
 
