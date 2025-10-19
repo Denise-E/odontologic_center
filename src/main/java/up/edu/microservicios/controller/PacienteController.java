@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController // sin vista
+@RestController
 @RequestMapping("/api/pacientes") // todo lo que venga de endpoints de pacientes
 public class PacienteController {
     private static final Logger LOGGER= Logger.getLogger(PacienteController.class);
@@ -21,7 +21,7 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
-    // Metodos CRUD conectando con el service
+    // Metodos
 
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> buscarPorId(@PathVariable Integer id){
