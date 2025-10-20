@@ -5,12 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/get_paciente.js"></script>
-    <script type="text/javascript" src="/static/js/update_paciente.js"></script>
-    <script type="text/javascript" src="/static/js/delete_paciente.js"></script>
+    <script type="text/javascript" src="js/get_paciente.js"></script>
+    <script type="text/javascript" src="js/update_paciente.js"></script>
+    <script type="text/javascript" src="js/delete_paciente.js"></script>
 </head>
 <body>
 <div class="container">
@@ -42,7 +39,7 @@
     <div id="div_paciente_table">
         <h1>Lista de Pacientes</h1>
         <div class="row col-md-6 table-responsive">
-            <table id="peliculaTable" class="table table-striped">
+            <table id="pacienteTable" class="table table-striped">
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -64,19 +61,27 @@
             <form id="update_paciente_form">
                 <div class="form-group">
                     <label >Id:</label>
-                    <input type="text" class="form-control" id="pelicula_id" readonly>
+                    <input type="text" class="form-control" id="paciente_id" readonly>
                 </div>
                 <div class="form-group">
-                    <label >Titulo:</label>
-                    <input type="text" class="form-control" placeholder="titulo" id="titulo">
+                    <label >Nombre:</label>
+                    <input type="text" class="form-control" placeholder="Nombre" id="nombre">
                 </div>
                 <div class="form-group">
-                    <label >Categoria:</label>
-                    <input type="text" class="form-control" placeholder="categoria" id="categoria">
+                    <label >Apellido:</label>
+                    <input type="text" class="form-control" placeholder="Apellido" id="apellido">
                 </div>
                 <div class="form-group">
-                    <label >Cant. premios:</label>
-                    <input type="text" class="form-control" placeholder="premios" id="premios">
+                    <label >Número de contacto:</label>
+                    <input type="text" class="form-control" placeholder="Número de contacto" id="numeroContacto">
+                </div>
+                <div class="form-group">
+                    <label >Fecha ingreso:</label>
+                    <input type="date" class="form-control" id="fechaIngreso">
+                </div>
+                <div class="form-group">
+                    <label >Email:</label>
+                    <input type="email" class="form-control" placeholder="Email" id="email">
                 </div>
 
 

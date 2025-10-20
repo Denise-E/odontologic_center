@@ -30,8 +30,8 @@ window.addEventListener('load', function () {
                                       '</button>';
 
             pacienteRow.innerHTML = '<td>' + updateButton + '</td>' +
-                    '<td class=\"td_titulo\">' + paciente.nombre.toUpperCase() + '</td>' +
-                    '<td class=\"td_categoria\">' + paciente.apellido.toUpperCase() + '</td>' +
+                    '<td class=\"td_titulo\">' + (paciente.nombre || '').toUpperCase() + '</td>' +
+                    '<td class=\"td_categoria\">' + (paciente.apellido || '').toUpperCase() + '</td>' +
                     '<td>' + deleteButton + '</td>';
 
         };
@@ -39,12 +39,7 @@ window.addEventListener('load', function () {
     })
     })
 
-    (function(){
-      let pathname = window.location.pathname;
-      if (pathname == "/pacienteList.html") {
-          document.querySelector(".nav .nav-item a:last").addClass("active");
-      }
-    })
+    // Navegación: remueve bloque que dependía de jQuery/Bootstrap 4
 
 
     })
