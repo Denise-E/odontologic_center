@@ -28,6 +28,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             connection = BD.getConnection();
             connection.setAutoCommit(false);
 
+            // Insertar domicilio
             String sqlDomicilio = "INSERT INTO DOMICILIOS (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
             PreparedStatement psDomicilio = connection.prepareStatement(sqlDomicilio, Statement.RETURN_GENERATED_KEYS);
             psDomicilio.setString(1, paciente.getDomicilio().getCalle());
@@ -44,38 +45,46 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             }
             psDomicilio.close();
 
+            // Insertar paciente
             PreparedStatement psPaciente = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             psPaciente.setString(1, paciente.getNombre());
             psPaciente.setString(2, paciente.getApellido());
-            psPaciente.setLong(3, paciente.getNumeroContacto());
+            psPaciente.setString(3, paciente.getNumeroContacto());
             psPaciente.setDate(4, Date.valueOf(paciente.getFechaIngreso()));
             psPaciente.setInt(5, domicilioId);
             psPaciente.setString(6, paciente.getEmail());
             psPaciente.executeUpdate();
 
+            // Recuperar ID generado
             ResultSet rsPaciente = psPaciente.getGeneratedKeys();
             if (rsPaciente.next()) {
                 paciente.setId(rsPaciente.getInt(1));
+            } else {
+                // fallback si H2 no devuelve el ID automáticamente
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("SELECT ID FROM PACIENTES ORDER BY ID DESC LIMIT 1");
+                if (rs.next()) {
+                    paciente.setId(rs.getInt(1));
+                }
+                st.close();
             }
 
             psPaciente.close();
             connection.commit();
-            LOGGER.info("Paciente guardado con ID: " + paciente.getId());
+            LOGGER.info("✅ Paciente guardado con ID: " + paciente.getId());
 
         } catch (Exception e) {
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException ex) {
-                LOGGER.error(ex.getMessage(), ex);
-                LOGGER.error(ex.getMessage(), ex);
-                ex.printStackTrace();
+                LOGGER.error("Error en rollback", ex);
             }
-            LOGGER.error("Error guardando paciente", e);
+            LOGGER.error("❌ Error guardando paciente", e);
         } finally {
             try {
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error("Error cerrando conexión", e);
             }
         }
 
@@ -100,7 +109,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             DomicilioDAOH2 daoAux= new DomicilioDAOH2();
             while(rs.next()){
                 domicilio=daoAux.buscar(rs.getInt(6));
-                paciente= new Paciente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getDate(5).toLocalDate(),domicilio,rs.getString(7));
+                paciente= new Paciente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5).toLocalDate(),domicilio,rs.getString(7));
             }
         }catch (Exception e){
             e.getMessage();
@@ -132,7 +141,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             PreparedStatement ps_update = connection.prepareStatement(SQL_UPDATE_BY_ID);
             ps_update.setString(1, paciente.getNombre());
             ps_update.setString(2, paciente.getApellido());
-            ps_update.setLong(3, paciente.getNumeroContacto());
+            ps_update.setString(3, paciente.getNumeroContacto());
             ps_update.setDate(4, java.sql.Date.valueOf(paciente.getFechaIngreso()));
             ps_update.setInt(5, paciente.getDomicilio().getId());
             ps_update.setString(6, paciente.getEmail());
@@ -161,7 +170,7 @@ public class PacienteDAOH2 implements iDao<Paciente>{
             DomicilioDAOH2 daoAux= new DomicilioDAOH2();
             while(rs.next()){
                 domicilio=daoAux.buscar(rs.getInt(6));
-                Paciente p = new Paciente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getDate(5).toLocalDate(),domicilio,rs.getString(7));
+                Paciente p = new Paciente(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5).toLocalDate(),domicilio,rs.getString(7));
                 pacientes.add(p);
             }
         }catch (Exception e){
