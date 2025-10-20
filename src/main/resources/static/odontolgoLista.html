@@ -9,11 +9,36 @@
     <script type="text/javascript" src="js/get_odontologo.js"></script>
     <script type="text/javascript" src="js/update_odontologo.js"></script>
     <script type="text/javascript" src="js/delete_odontologo.js"></script>
+    <script type="text/javascript" src="js/create_odontologo.js"></script>
 </head>
 <body>
     <div id="app-header"></div>
     <div class="container">
         <h1>Lista de Odontologos</h1>
+        <div class="row mb-4">
+            <div class="col-sm-6" style="background-color:#f8f9fa; padding:10px; border-radius:3px">
+                <h5>Crear Odontólogo</h5>
+                <form id="create_odontologo_form">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" class="form-control" id="c_od_nombre" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido:</label>
+                        <input type="text" class="form-control" id="c_od_apellido" placeholder="Apellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Matrícula:</label>
+                        <input type="text" class="form-control" id="c_od_matricula" placeholder="Matrícula" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Requisitos turnos (opcional):</label>
+                        <input type="text" class="form-control" id="c_od_requisitos" placeholder="Requisitos (opcional)">
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Crear</button>
+                </form>
+            </div>
+        </div>
         <div id="div_odontologo_table">
             <div class="row col-md-10 table-responsive">
                 <table id="odontologoTable" class="table table-striped">
