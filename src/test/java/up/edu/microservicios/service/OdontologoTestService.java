@@ -1,11 +1,13 @@
 package up.edu.microservicios.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import up.edu.microservicios.model.Odontologo;
+import up.edu.microservicios.dao.BD;
 
 import java.util.List;
 
@@ -16,6 +18,12 @@ public class OdontologoTestService {
 
     @Autowired
     private OdontologoService odontologoService; // Spring inyecta el bean real
+
+    @BeforeEach
+    public void setUpSchema() {
+        // Asegura que las tablas existan en H2 para los DAOs JDBC
+        BD.crearTablas();
+    }
 
     @Test
     public void testGuardar() {

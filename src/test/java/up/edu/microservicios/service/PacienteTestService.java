@@ -31,7 +31,7 @@ public class PacienteTestService {
                 null,
                 "Homero",
                 "Simpson",
-                123456789,
+                "123456789",
                 LocalDate.of(2025, 10, 9),
                 domicilio,
                 "homero@springfield.com"
@@ -55,7 +55,7 @@ public class PacienteTestService {
                 new Domicilio(null, "Calle 123", 456, "CABA", "Buenos Aires")
         );
         Paciente pacienteCreado = pacienteService.guardar(
-                new Paciente(null, "Federico", "Rojas", 1111, LocalDate.now(), domicilio, "federico@mail.com")
+                new Paciente(null, "Federico", "Rojas", "1111", LocalDate.now(), domicilio, "federico@mail.com")
         );
 
         Paciente paciente = pacienteService.buscarPorId(pacienteCreado.getId());
@@ -67,8 +67,8 @@ public class PacienteTestService {
 
     @Test
     public void testBuscarTodos() {
-        pacienteService.guardar(new Paciente(null, "A", "A", 123, LocalDate.now(), null, "a@mail.com"));
-        pacienteService.guardar(new Paciente(null, "B", "B", 456, LocalDate.now(), null, "b@mail.com"));
+        pacienteService.guardar(new Paciente(null, "A", "A", "123", LocalDate.now(), null, "a@mail.com"));
+        pacienteService.guardar(new Paciente(null, "B", "B", "456", LocalDate.now(), null, "b@mail.com"));
 
         List<Paciente> pacientes = pacienteService.buscarTodos();
 
@@ -83,14 +83,14 @@ public class PacienteTestService {
         );
 
         Paciente paciente = pacienteService.guardar(
-                new Paciente(null, "Juan", "Pérez", 11111111, LocalDate.of(2024, 5, 5), domicilio, "juan@mail.com")
+                new Paciente(null, "Juan", "Pérez", "11111111", LocalDate.of(2024, 5, 5), domicilio, "juan@mail.com")
         );
 
         Paciente actualizado = new Paciente(
                 paciente.getId(),
                 "Juan Carlos",
                 "Pérez",
-                22222222,
+                "22222222",
                 LocalDate.of(2025, 2, 2),
                 domicilio,
                 "juanc@mail.com"
@@ -112,7 +112,7 @@ public class PacienteTestService {
                 new Domicilio(null, "Calle Falsa", 123, "Springfield", "USA")
         );
         Paciente nuevo = pacienteService.guardar(
-                new Paciente(null, "Laura", "Gómez", 12345678, LocalDate.now(), domicilio, "laura@mail.com")
+                new Paciente(null, "Laura", "Gómez", "12345678", LocalDate.now(), domicilio, "laura@mail.com")
         );
 
         Integer id = nuevo.getId();

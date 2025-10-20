@@ -1,12 +1,8 @@
 
 > Fix tests
 
-> Ajustar front del profe
-
 > Endpoints actuales:
     * Mejorar casos de Error
-    * FIX POST Pacientes
 
 > @Autowired en Controller
 
-> TODO Terminar CRUD Pacientes y Odontologos (Hacer backend por lo menos)
