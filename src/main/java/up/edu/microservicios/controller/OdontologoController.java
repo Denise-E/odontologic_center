@@ -2,14 +2,14 @@ package up.edu.microservicios.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import up.edu.microservicios.model.Odontologo;
+import up.edu.microservicios.model.Paciente;
 import up.edu.microservicios.service.OdontologoService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/odontologos")
@@ -43,5 +43,26 @@ public class OdontologoController {
             return ResponseEntity.ok(odontologos);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> crearOdontologo(@RequestBody Odontologo odontologo) {
+        try {
+            LOGGER.info("Creando odontologo: " + odontologo);
+            Odontologo odontologoCreado = odontologoService.guardar(odontologo);
+            LOGGER.info("Odontologo creado: "+odontologoCreado);
+            if (odontologoCreado != null) {
+                return ResponseEntity.ok(odontologoCreado);
+            } else {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "No se pudo crear el odontologo");
+                return ResponseEntity.internalServerError().body(response);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error al crear odontologo", e);
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Ocurrió un error al procesar la solicitud");
+            return ResponseEntity.internalServerError().body(error);
+        }
     }
 }
