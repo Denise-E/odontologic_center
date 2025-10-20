@@ -1,12 +1,14 @@
 package up.edu.microservicios.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import up.edu.microservicios.model.Domicilio;
 import up.edu.microservicios.model.Paciente;
+import up.edu.microservicios.dao.BD;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +22,12 @@ public class PacienteTestService {
 
     @Autowired
     private DomicilioService domicilioService;
+
+    @BeforeEach
+    public void setUpSchema() {
+        // Garantiza que las tablas existan para los DAOs JDBC antes de cada test
+        BD.crearTablas();
+    }
 
     @Test
     public void testGuardar() {
@@ -42,7 +50,7 @@ public class PacienteTestService {
         Assertions.assertNotNull(guardado.getId(), "El paciente guardado debe tener ID");
         Assertions.assertEquals("Homero", guardado.getNombre());
         Assertions.assertEquals("Simpson", guardado.getApellido());
-        Assertions.assertEquals(123456789, guardado.getNumeroContacto());
+        Assertions.assertEquals("123456789", guardado.getNumeroContacto());
         Assertions.assertEquals(LocalDate.of(2025, 10, 9), guardado.getFechaIngreso());
         Assertions.assertEquals("homero@springfield.com", guardado.getEmail());
         Assertions.assertNotNull(guardado.getDomicilio());
@@ -101,7 +109,7 @@ public class PacienteTestService {
 
         Assertions.assertNotNull(pacienteActualizado);
         Assertions.assertEquals("Juan Carlos", pacienteActualizado.getNombre());
-        Assertions.assertEquals(22222222, pacienteActualizado.getNumeroContacto());
+        Assertions.assertEquals("22222222", pacienteActualizado.getNumeroContacto());
         Assertions.assertEquals(LocalDate.of(2025, 2, 2), pacienteActualizado.getFechaIngreso());
         Assertions.assertEquals("juanc@mail.com", pacienteActualizado.getEmail());
     }

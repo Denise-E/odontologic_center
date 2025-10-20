@@ -1,6 +1,4 @@
 
-> Fix tests
-
 > Endpoints actuales:
     * Mejorar casos de Error
 
