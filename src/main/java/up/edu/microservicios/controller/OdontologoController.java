@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import up.edu.microservicios.model.Odontologo;
-import up.edu.microservicios.model.Paciente;
 import up.edu.microservicios.service.OdontologoService;
 
 import java.util.HashMap;
@@ -65,4 +64,45 @@ public class OdontologoController {
             return ResponseEntity.internalServerError().body(error);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> eliminarOdontologo(@PathVariable Integer id){
+        LOGGER.info("Eliminando odontologo: "+id);
+        odontologoService.eliminar(id);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Odontologo eliminado exitosamente");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarOdontologo(@PathVariable Integer id, @RequestBody Odontologo odontologoActualziado) {
+        LOGGER.info("Actualizando odontologo con ID: " + id);
+
+        Odontologo odontologoExistente = odontologoService.buscarPorId(id);
+        if (odontologoExistente == null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Odontologo no encontrado");
+            return ResponseEntity.status(404).body(response);
+        }
+
+        if (odontologoActualziado.getNombre() != null)
+            odontologoExistente.setNombre(odontologoActualziado.getNombre());
+
+        if (odontologoActualziado.getApellido() != null)
+            odontologoExistente.setApellido(odontologoActualziado.getApellido());
+
+        if (odontologoActualziado.getMatricula() != null)
+            odontologoExistente.setMatricula(odontologoActualziado.getMatricula());
+
+        if (odontologoActualziado.getRequisitosTurnos() != null)
+            odontologoExistente.setRequisitosTurnos(odontologoActualziado.getRequisitosTurnos());
+
+        odontologoService.actualizar(odontologoExistente);
+        LOGGER.info("Odontologo actualizado: " + odontologoExistente);
+
+        return ResponseEntity.ok(odontologoExistente);
+    }
+
 }
