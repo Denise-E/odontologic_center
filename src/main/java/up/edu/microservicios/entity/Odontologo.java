@@ -12,7 +12,11 @@ public class Odontologo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombre, apellido, matricula, requisitosTurnos;
+    private String nombre;
+    private String apellido;
+    @Column(unique = true, nullable = false)
+    private String matricula;
+    private String requisitosTurnos;
 
     public Odontologo(Integer id, String nombre, String apellido, String matricula, String requisitosTurnos) {
         this.id = id;
