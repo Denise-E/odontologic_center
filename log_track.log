@@ -376,3 +376,15 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-10-23 20:34:04] [ INFO ] [PacienteController:70] Creando paciente: up.edu.microservicios.entity.Paciente@464cd6b6
 [2025-10-23 20:34:04] [ INFO ] [PacienteController:72] Paciente creado: up.edu.microservicios.entity.Paciente@464cd6b6
 [2025-10-23 20:34:19] [ INFO ] [PacienteController:41] Buscando todos pacientes
+[2025-10-23 20:43:03] [ ERROR] [BD:29] Imposible eliminar "DOMICILIOS" debido a que "FKTFF8IEH5WFECPJF45I11XUG8C" depende de él.
+Cannot drop "DOMICILIOS" because "FKTFF8IEH5WFECPJF45I11XUG8C" depends on it; SQL statement:
+DROP TABLE IF EXISTS DOMICILIOS [90107-232]
+[2025-10-23 20:43:46] [ INFO ] [OdontologoController:60] Creando odontologo: up.edu.microservicios.entity.Odontologo@125cd2c0
+[2025-10-23 20:43:46] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@125cd2c0
+[2025-10-23 20:44:00] [ INFO ] [OdontologoController:91] Actualizando odontologo con ID: 1
+[2025-10-23 20:44:00] [ INFO ] [OdontologoController:115] Odontologo actualizado: up.edu.microservicios.entity.Odontologo@4d4c3713
+[2025-10-23 20:44:05] [ INFO ] [OdontologoController:40] Buscando todos odontologos
+[2025-10-23 20:44:09] [ INFO ] [OdontologoController:28] Buscando odontologo por ID: 1
+[2025-10-23 20:44:09] [ INFO ] [OdontologoController:31] Odontologo encontrado: Optional[up.edu.microservicios.entity.Odontologo@2be9fa8e]
+[2025-10-23 20:44:15] [ INFO ] [OdontologoController:80] Eliminando odontologo: 5
+[2025-10-23 20:44:18] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1

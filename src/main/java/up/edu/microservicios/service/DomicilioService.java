@@ -1,42 +1,36 @@
 package up.edu.microservicios.service;
 
-import up.edu.microservicios.dao_DELETE.iDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import up.edu.microservicios.entity.Domicilio;
 import org.springframework.stereotype.Service;
+import up.edu.microservicios.repository.DomicilioRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class DomicilioService implements iService<Domicilio> {
-    private iDao<Domicilio> domicilioDao;
+public class DomicilioService {
+    @Autowired
+    private DomicilioRepository domicilioRepository;
 
-    public DomicilioService(iDao<Domicilio> domicilioDao) {
-        this.domicilioDao = domicilioDao;
-    }
-
-    @Override
     public Domicilio guardar(Domicilio domicilio) {
-        return domicilioDao.guardar(domicilio);
+        return domicilioRepository.save(domicilio);
     }
 
-    @Override
-    public Domicilio buscarPorId(Integer id) {
-        return domicilioDao.buscar(id);
+    public Optional<Domicilio> buscarPorId(Integer id) {
+        return domicilioRepository.findById(id);
     }
 
-    @Override
     public List<Domicilio> buscarTodos() {
-        return domicilioDao.buscarTodos();
+        return domicilioRepository.findAll();
     }
 
-    @Override
-    public void actualizar(Domicilio domicilio) {
-        domicilioDao.actualizar(domicilio);
+    public Domicilio actualizar(Domicilio domicilio) {
+        return domicilioRepository.save(domicilio);
     }
 
-    @Override
     public void eliminar(Integer id) {
-        domicilioDao.eliminar(id);
+        domicilioRepository.deleteById(id);
     }
 }
 
