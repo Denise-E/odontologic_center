@@ -370,3 +370,9 @@ insert into pacientes (apellido,domicilio_id,email,fecha_ingreso,nombre,numero_c
 [2025-10-23 20:29:23] [ INFO ] [PacienteController:41] Buscando todos pacientes
 [2025-10-23 20:29:32] [ INFO ] [PacienteController:78] Eliminando paciente: 3
 [2025-10-23 20:29:38] [ INFO ] [PacienteController:41] Buscando todos pacientes
+[2025-10-23 20:33:52] [ ERROR] [BD:29] Imposible eliminar "DOMICILIOS" debido a que "FKTFF8IEH5WFECPJF45I11XUG8C" depende de él.
+Cannot drop "DOMICILIOS" because "FKTFF8IEH5WFECPJF45I11XUG8C" depends on it; SQL statement:
+DROP TABLE IF EXISTS DOMICILIOS [90107-232]
+[2025-10-23 20:34:04] [ INFO ] [PacienteController:70] Creando paciente: up.edu.microservicios.entity.Paciente@464cd6b6
+[2025-10-23 20:34:04] [ INFO ] [PacienteController:72] Paciente creado: up.edu.microservicios.entity.Paciente@464cd6b6
+[2025-10-23 20:34:19] [ INFO ] [PacienteController:41] Buscando todos pacientes

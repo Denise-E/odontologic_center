@@ -1,41 +1,39 @@
 package up.edu.microservicios.service;
 
-import up.edu.microservicios.dao_DELETE.iDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import up.edu.microservicios.entity.Odontologo;
 import org.springframework.stereotype.Service;
+import up.edu.microservicios.repository.OdontologoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class OdontologoService implements iService<Odontologo> {
-    private iDao<Odontologo> odontologoDao;
+public class OdontologoService {
+    @Autowired
+    private OdontologoRepository odontologoRepository;
 
-    public OdontologoService(iDao<Odontologo> odontologoDao) {
-        this.odontologoDao = odontologoDao;
-    }
-
-    @Override
     public Odontologo guardar(Odontologo odontologo) {
-        return odontologoDao.guardar(odontologo);
+        return odontologoRepository.save(odontologo);
     }
 
-    @Override
-    public Odontologo buscarPorId(Integer id) {
-        return odontologoDao.buscar(id);
+    public Optional<Odontologo> buscarPorId(Integer id) {
+        return odontologoRepository.findById(id);
     }
 
-    @Override
     public List<Odontologo> buscarTodos() {
-        return odontologoDao.buscarTodos();
+        return odontologoRepository.findAll();
     }
 
-    @Override
-    public void actualizar(Odontologo odontologo) {
-        odontologoDao.actualizar(odontologo);
+    public Odontologo actualizar(Odontologo odontologo) {
+        return odontologoRepository.save(odontologo);
     }
 
-    @Override
     public void eliminar(Integer id) {
-        odontologoDao.eliminar(id);
+        odontologoRepository.deleteById(id);
+    }
+
+    public Optional<Odontologo> buscarPorMatricula(String matricula) {
+        return odontologoRepository.findByMatricula(matricula);
     }
 }

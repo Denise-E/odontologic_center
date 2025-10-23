@@ -9,6 +9,7 @@ import up.edu.microservicios.service.OdontologoService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/odontologos")
@@ -25,11 +26,11 @@ public class OdontologoController {
     @GetMapping("/{id}")
     public ResponseEntity<Odontologo> buscarPorId(@PathVariable Integer id){
         LOGGER.info("Buscando odontologo por ID: "+id);
-        Odontologo odontologoBuscado = odontologoService.buscarPorId(id);
+        Optional<Odontologo> odontologoBuscado = odontologoService.buscarPorId(id);
 
         LOGGER.info("Odontologo encontrado: "+odontologoBuscado);
-        if(odontologoBuscado != null){
-            return ResponseEntity.ok(odontologoBuscado);
+        if(odontologoBuscado.isPresent()){
+            return ResponseEntity.ok(odontologoBuscado.get());
         }
         return ResponseEntity.notFound().build();
     }
@@ -47,6 +48,15 @@ public class OdontologoController {
     @PostMapping
     public ResponseEntity<?> crearOdontologo(@RequestBody Odontologo odontologo) {
         try {
+            // Validar matrícula única
+            Optional<Odontologo> odontologoPorMatricula = odontologoService.buscarPorMatricula(odontologo.getMatricula());
+            if(odontologoPorMatricula.isPresent()){
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "La matrícula " + odontologo.getMatricula() + " ya está registrada");
+                response.put("field", "matricula");
+                return ResponseEntity.status(409).body(response); // 409 Conflict
+            }
+
             LOGGER.info("Creando odontologo: " + odontologo);
             Odontologo odontologoCreado = odontologoService.guardar(odontologo);
             LOGGER.info("Odontologo creado: "+odontologoCreado);
@@ -60,7 +70,7 @@ public class OdontologoController {
         } catch (Exception e) {
             LOGGER.error("Error al crear odontologo", e);
             Map<String, String> error = new HashMap<>();
-            error.put("error", "Ocurrió un error al procesar la solicitud");
+            error.put("error", "Ocurrió un error al procesar la solicitud: " + e.getMessage());
             return ResponseEntity.internalServerError().body(error);
         }
     }
@@ -77,32 +87,34 @@ public class OdontologoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarOdontologo(@PathVariable Integer id, @RequestBody Odontologo odontologoActualziado) {
+    public ResponseEntity<?> actualizarOdontologo(@PathVariable Integer id, @RequestBody Odontologo odontologoActualizado) {
         LOGGER.info("Actualizando odontologo con ID: " + id);
 
-        Odontologo odontologoExistente = odontologoService.buscarPorId(id);
-        if (odontologoExistente == null) {
+        Optional<Odontologo> odontologoOpt = odontologoService.buscarPorId(id);
+        if (odontologoOpt.isEmpty()) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Odontologo no encontrado");
             return ResponseEntity.status(404).body(response);
         }
 
-        if (odontologoActualziado.getNombre() != null)
-            odontologoExistente.setNombre(odontologoActualziado.getNombre());
+        Odontologo odontologoExistente = odontologoOpt.get();
 
-        if (odontologoActualziado.getApellido() != null)
-            odontologoExistente.setApellido(odontologoActualziado.getApellido());
+        if (odontologoActualizado.getNombre() != null)
+            odontologoExistente.setNombre(odontologoActualizado.getNombre());
 
-        if (odontologoActualziado.getMatricula() != null)
-            odontologoExistente.setMatricula(odontologoActualziado.getMatricula());
+        if (odontologoActualizado.getApellido() != null)
+            odontologoExistente.setApellido(odontologoActualizado.getApellido());
 
-        if (odontologoActualziado.getRequisitosTurnos() != null)
-            odontologoExistente.setRequisitosTurnos(odontologoActualziado.getRequisitosTurnos());
+        if (odontologoActualizado.getMatricula() != null)
+            odontologoExistente.setMatricula(odontologoActualizado.getMatricula());
 
-        odontologoService.actualizar(odontologoExistente);
-        LOGGER.info("Odontologo actualizado: " + odontologoExistente);
+        if (odontologoActualizado.getRequisitosTurnos() != null)
+            odontologoExistente.setRequisitosTurnos(odontologoActualizado.getRequisitosTurnos());
 
-        return ResponseEntity.ok(odontologoExistente);
+        Odontologo odontologoActualizadoFinal = odontologoService.actualizar(odontologoExistente);
+        LOGGER.info("Odontologo actualizado: " + odontologoActualizadoFinal);
+
+        return ResponseEntity.ok(odontologoActualizadoFinal);
     }
 
 }

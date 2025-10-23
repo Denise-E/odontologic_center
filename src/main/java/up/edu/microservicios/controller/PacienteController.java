@@ -17,7 +17,6 @@ public class PacienteController {
     private static final Logger LOGGER= Logger.getLogger(PacienteController.class);
     private PacienteService pacienteService;
 
-    // @Autowired
     public PacienteController(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }

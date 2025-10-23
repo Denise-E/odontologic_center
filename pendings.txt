@@ -1,9 +1,4 @@
 
-> Endpoints actuales:
-    * Mejorar casos de Error
-
-> @Autowired en Controller
-
 
 // ELIMINAR CARPETA DAO
 // Debería poder eleiminar getters y setters de entity
