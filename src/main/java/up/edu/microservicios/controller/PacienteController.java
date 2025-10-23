@@ -49,10 +49,22 @@ public class PacienteController {
     @PostMapping
     public ResponseEntity<?> crearPaciente(@RequestBody Paciente paciente) {
         try {
-            Optional<Paciente> pacienteBuscado = pacienteService.buscarPorEmail(paciente.getEmail());
+            // Validar email único
+            Optional<Paciente> pacientePorEmail = pacienteService.buscarPorEmail(paciente.getEmail());
+            if(pacientePorEmail.isPresent()){
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "El email " + paciente.getEmail() + " ya está registrado");
+                response.put("field", "email");
+                return ResponseEntity.status(409).body(response); // 409 Conflict
+            }
 
-            if(pacienteBuscado.isPresent()){
-                return ResponseEntity.badRequest().build();
+            // Validar número de contacto único
+            Optional<Paciente> pacientePorTelefono = pacienteService.buscarPorNumeroContacto(paciente.getNumeroContacto());
+            if(pacientePorTelefono.isPresent()){
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "El número de contacto " + paciente.getNumeroContacto() + " ya está registrado");
+                response.put("field", "numeroContacto");
+                return ResponseEntity.status(409).body(response); // 409 Conflict
             }
 
             LOGGER.info("Creando paciente: " + paciente);
@@ -68,7 +80,7 @@ public class PacienteController {
         } catch (Exception e) {
             LOGGER.error("Error al crear paciente", e);
             Map<String, String> error = new HashMap<>();
-            error.put("error", "Ocurrió un error al procesar la solicitud");
+            error.put("error", "Ocurrió un error al procesar la solicitud: " + e.getMessage());
             return ResponseEntity.internalServerError().body(error);
         }
     }

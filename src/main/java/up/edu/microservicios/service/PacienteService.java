@@ -36,6 +36,10 @@ public class PacienteService {
     public Optional<Paciente> buscarPorEmail(String email) {
         return pacienteRepository.findByEmail(email);
     }
+
+    public Optional<Paciente> buscarPorNumeroContacto(String numeroContacto) {
+        return pacienteRepository.findByNumeroContacto(numeroContacto);
+    }
     /*
     implements iService<Paciente>
     private iDao<Paciente> pacienteiDao;
