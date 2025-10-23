@@ -1,8 +1,8 @@
-package up.edu.microservicios.dao;
+package up.edu.microservicios.dao_DELETE;
 
 import org.apache.log4j.Logger;
-import up.edu.microservicios.model.Domicilio;
-import up.edu.microservicios.model.Paciente;
+import up.edu.microservicios.entity.Domicilio;
+import up.edu.microservicios.entity.Paciente;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;

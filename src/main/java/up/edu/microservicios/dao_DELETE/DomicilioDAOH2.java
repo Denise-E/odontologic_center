@@ -1,6 +1,6 @@
-package up.edu.microservicios.dao;
+package up.edu.microservicios.dao_DELETE;
 
-import up.edu.microservicios.model.Domicilio;
+import up.edu.microservicios.entity.Domicilio;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;

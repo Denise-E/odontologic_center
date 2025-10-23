@@ -1,6 +1,16 @@
-package up.edu.microservicios.model;
+package up.edu.microservicios.entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+@Entity
+@Table(name = "odontologos")
 public class Odontologo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombre, apellido, matricula, requisitosTurnos;
 
@@ -28,7 +38,7 @@ public class Odontologo {
     public Odontologo() {
 
     }
-
+    /*
     public Integer getId() {
         return id;
     }
@@ -68,5 +78,7 @@ public class Odontologo {
     public void setRequisitosTurnos(String requisitosTurnos) {
         this.requisitosTurnos = requisitosTurnos;
     }
+
+     */
 }
 

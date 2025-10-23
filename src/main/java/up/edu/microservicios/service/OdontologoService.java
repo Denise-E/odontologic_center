@@ -1,7 +1,7 @@
 package up.edu.microservicios.service;
 
-import up.edu.microservicios.dao.iDao;
-import up.edu.microservicios.model.Odontologo;
+import up.edu.microservicios.dao_DELETE.iDao;
+import up.edu.microservicios.entity.Odontologo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

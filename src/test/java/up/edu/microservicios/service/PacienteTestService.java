@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import up.edu.microservicios.model.Domicilio;
-import up.edu.microservicios.model.Paciente;
-import up.edu.microservicios.dao.BD;
+import up.edu.microservicios.entity.Domicilio;
+import up.edu.microservicios.entity.Paciente;
+import up.edu.microservicios.dao_DELETE.BD;
 
 import java.time.LocalDate;
 import java.util.List;

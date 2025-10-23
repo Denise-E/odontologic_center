@@ -3,7 +3,7 @@ package up.edu.microservicios.controller;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import up.edu.microservicios.model.Odontologo;
+import up.edu.microservicios.entity.Odontologo;
 import up.edu.microservicios.service.OdontologoService;
 
 import java.util.HashMap;

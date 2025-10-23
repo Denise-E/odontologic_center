@@ -1,6 +1,16 @@
-package up.edu.microservicios.model;
+package up.edu.microservicios.entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+@Entity
+@Table(name = "domicilios")
 public class Domicilio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String calle;
     private Integer numero;

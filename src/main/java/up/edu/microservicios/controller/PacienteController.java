@@ -2,7 +2,7 @@ package up.edu.microservicios.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
-import up.edu.microservicios.model.Paciente;
+import up.edu.microservicios.entity.Paciente;
 import org.springframework.http.ResponseEntity;
 import up.edu.microservicios.service.PacienteService;
 

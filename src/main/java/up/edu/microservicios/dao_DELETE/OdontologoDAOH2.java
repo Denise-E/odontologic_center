@@ -1,7 +1,7 @@
-package up.edu.microservicios.dao;
+package up.edu.microservicios.dao_DELETE;
 
 import org.apache.log4j.Logger;
-import up.edu.microservicios.model.Odontologo;
+import up.edu.microservicios.entity.Odontologo;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
