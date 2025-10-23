@@ -9,6 +9,7 @@ import up.edu.microservicios.service.PacienteService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pacientes") // todo lo que venga de endpoints de pacientes
@@ -26,11 +27,11 @@ public class PacienteController {
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> buscarPorId(@PathVariable Integer id){
         LOGGER.info("Buscando paciente por ID: "+id);
-        Paciente pacienteBuscado = pacienteService.buscarPorId(id);
+        Optional<Paciente> pacienteBuscado = pacienteService.buscarPorId(id);
 
         LOGGER.info("Paciente encontrado: "+pacienteBuscado);
-        if(pacienteBuscado != null){
-            return ResponseEntity.ok(pacienteBuscado);
+        if(pacienteBuscado.isPresent()){
+            return ResponseEntity.ok(pacienteBuscado.get());
         }
         return ResponseEntity.notFound().build();
     }
@@ -48,6 +49,12 @@ public class PacienteController {
     @PostMapping
     public ResponseEntity<?> crearPaciente(@RequestBody Paciente paciente) {
         try {
+            Optional<Paciente> pacienteBuscado = pacienteService.buscarPorEmail(paciente.getEmail());
+
+            if(pacienteBuscado.isPresent()){
+                return ResponseEntity.badRequest().build();
+            }
+
             LOGGER.info("Creando paciente: " + paciente);
             Paciente pacienteCreado = pacienteService.guardar(paciente);
             LOGGER.info("Paciente creado: "+pacienteCreado);
@@ -81,12 +88,14 @@ public class PacienteController {
     public ResponseEntity<?> actualizarPaciente(@PathVariable Integer id, @RequestBody Paciente pacienteActualizado) {
         LOGGER.info("Actualizando paciente con ID: " + id);
 
-        Paciente pacienteExistente = pacienteService.buscarPorId(id);
-        if (pacienteExistente == null) {
+        Optional<Paciente> pacienteOpt = pacienteService.buscarPorId(id);
+        if (pacienteOpt.isEmpty()) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Paciente no encontrado");
             return ResponseEntity.status(404).body(response);
         }
+
+        Paciente pacienteExistente = pacienteOpt.get();
 
         if (pacienteActualizado.getNombre() != null)
             pacienteExistente.setNombre(pacienteActualizado.getNombre());
@@ -118,10 +127,10 @@ public class PacienteController {
             }
         }
 
-        pacienteService.actualizar(pacienteExistente);
-        LOGGER.info("Paciente actualizado: " + pacienteExistente);
+        Paciente pacienteActualizadoFinal = pacienteService.actualizar(pacienteExistente);
+        LOGGER.info("Paciente actualizado: " + pacienteActualizadoFinal);
 
-        return ResponseEntity.ok(pacienteExistente);
+        return ResponseEntity.ok(pacienteActualizadoFinal);
     }
 
 }

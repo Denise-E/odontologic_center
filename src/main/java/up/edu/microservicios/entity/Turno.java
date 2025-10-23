@@ -22,4 +22,6 @@ public class Turno {
     @JoinColumn(name = "odontologo_id", referencedColumnName = "id")
     private Odontologo odontologo;
     private LocalDate fecha;
+
+    public Turno(){};
 }
