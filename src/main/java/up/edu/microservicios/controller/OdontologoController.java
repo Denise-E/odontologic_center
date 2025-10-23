@@ -78,6 +78,14 @@ public class OdontologoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminarOdontologo(@PathVariable Integer id){
         LOGGER.info("Eliminando odontologo: "+id);
+        
+        Optional<Odontologo> odontologoExistente = odontologoService.buscarPorId(id);
+        if (odontologoExistente.isEmpty()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Odontologo no encontrado");
+            return ResponseEntity.status(404).body(response);
+        }
+        
         odontologoService.eliminar(id);
 
         Map<String, String> response = new HashMap<>();

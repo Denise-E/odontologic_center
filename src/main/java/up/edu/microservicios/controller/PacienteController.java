@@ -87,6 +87,14 @@ public class PacienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminarPaciente(@PathVariable Integer id){
         LOGGER.info("Eliminando paciente: "+id);
+        
+        Optional<Paciente> pacienteExistente = pacienteService.buscarPorId(id);
+        if (pacienteExistente.isEmpty()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Paciente no encontrado");
+            return ResponseEntity.status(404).body(response);
+        }
+        
         pacienteService.eliminar(id);
 
         Map<String, String> response = new HashMap<>();
