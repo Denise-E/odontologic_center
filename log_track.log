@@ -408,3 +408,8 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-10-23 20:50:09] [ INFO ] [OdontologoController:31] Odontologo encontrado: Optional[up.edu.microservicios.entity.Odontologo@37e3d4c8]
 [2025-10-23 20:50:12] [ INFO ] [OdontologoController:40] Buscando todos odontologos
 [2025-10-23 20:50:14] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1
+[2025-10-23 20:51:49] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1
+[2025-10-23 20:51:53] [ INFO ] [OdontologoController:60] Creando odontologo: up.edu.microservicios.entity.Odontologo@53e3a56
+[2025-10-23 20:51:53] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@53e3a56
+[2025-10-23 20:51:56] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1
+[2025-10-23 20:51:57] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1

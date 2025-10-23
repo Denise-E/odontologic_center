@@ -1,15 +1,14 @@
 package up.edu.microservicios.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import up.edu.microservicios.entity.Odontologo;
-import up.edu.microservicios.dao_DELETE.BD;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest  // Levanta el contexto completo de Spring Boot
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -18,12 +17,6 @@ public class OdontologoTestService {
 
     @Autowired
     private OdontologoService odontologoService; // Spring inyecta el bean real
-
-    @BeforeEach
-    public void setUpSchema() {
-        // Asegura que las tablas existan en H2 para los DAOs JDBC
-        BD.crearTablas();
-    }
 
     @Test
     public void testGuardar() {
@@ -40,9 +33,10 @@ public class OdontologoTestService {
         Odontologo odontologo = new Odontologo("Federico", "Rojas", "D3433");
         odontologoService.guardar(odontologo);
 
-        Odontologo buscado = odontologoService.buscarPorId(odontologo.getId());
+        Optional<Odontologo> buscadoOpt = odontologoService.buscarPorId(odontologo.getId());
 
-        Assertions.assertNotNull(buscado);
+        Assertions.assertTrue(buscadoOpt.isPresent());
+        Odontologo buscado = buscadoOpt.get();
         Assertions.assertEquals("Federico", buscado.getNombre());
         Assertions.assertEquals("Rojas", buscado.getApellido());
         Assertions.assertEquals("D3433", buscado.getMatricula());
@@ -66,8 +60,8 @@ public class OdontologoTestService {
 
         odontologoService.eliminar(id);
 
-        Odontologo buscado = odontologoService.buscarPorId(id);
-        Assertions.assertNull(buscado);
+        Optional<Odontologo> buscado = odontologoService.buscarPorId(id);
+        Assertions.assertFalse(buscado.isPresent());
     }
 
     @Test
@@ -83,9 +77,10 @@ public class OdontologoTestService {
         );
         odontologoService.actualizar(actualizado);
 
-        Odontologo odontologoActualizado = odontologoService.buscarPorId(creado.getId());
+        Optional<Odontologo> odontologoActualizadoOpt = odontologoService.buscarPorId(creado.getId());
 
-        Assertions.assertNotNull(odontologoActualizado);
+        Assertions.assertTrue(odontologoActualizadoOpt.isPresent());
+        Odontologo odontologoActualizado = odontologoActualizadoOpt.get();
         Assertions.assertEquals("MAT999", odontologoActualizado.getMatricula());
         Assertions.assertEquals("Historial clínico", odontologoActualizado.getRequisitosTurnos());
     }

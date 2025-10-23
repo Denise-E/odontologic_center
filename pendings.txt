@@ -1,7 +1,2 @@
 
-
-// ELIMINAR CARPETA DAO
-// Debería poder eleiminar getters y setters de entity
-
-
-Check -> PacienteController y Tests
+Check -> Tests

@@ -1,17 +1,16 @@
 package up.edu.microservicios.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import up.edu.microservicios.entity.Domicilio;
 import up.edu.microservicios.entity.Paciente;
-import up.edu.microservicios.dao_DELETE.BD;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -22,12 +21,6 @@ public class PacienteTestService {
 
     @Autowired
     private DomicilioService domicilioService;
-
-    @BeforeEach
-    public void setUpSchema() {
-        // Garantiza que las tablas existan para los DAOs JDBC antes de cada test
-        BD.crearTablas();
-    }
 
     @Test
     public void testGuardar() {
@@ -66,9 +59,10 @@ public class PacienteTestService {
                 new Paciente(null, "Federico", "Rojas", "1111", LocalDate.now(), domicilio, "federico@mail.com")
         );
 
-        Paciente paciente = pacienteService.buscarPorId(pacienteCreado.getId());
+        Optional<Paciente> pacienteOpt = pacienteService.buscarPorId(pacienteCreado.getId());
 
-        Assertions.assertNotNull(paciente);
+        Assertions.assertTrue(pacienteOpt.isPresent());
+        Paciente paciente = pacienteOpt.get();
         Assertions.assertEquals("Federico", paciente.getNombre());
         Assertions.assertEquals("Rojas", paciente.getApellido());
     }
@@ -105,9 +99,10 @@ public class PacienteTestService {
         );
 
         pacienteService.actualizar(actualizado);
-        Paciente pacienteActualizado = pacienteService.buscarPorId(paciente.getId());
+        Optional<Paciente> pacienteActualizadoOpt = pacienteService.buscarPorId(paciente.getId());
 
-        Assertions.assertNotNull(pacienteActualizado);
+        Assertions.assertTrue(pacienteActualizadoOpt.isPresent());
+        Paciente pacienteActualizado = pacienteActualizadoOpt.get();
         Assertions.assertEquals("Juan Carlos", pacienteActualizado.getNombre());
         Assertions.assertEquals("22222222", pacienteActualizado.getNumeroContacto());
         Assertions.assertEquals(LocalDate.of(2025, 2, 2), pacienteActualizado.getFechaIngreso());
@@ -126,7 +121,7 @@ public class PacienteTestService {
         Integer id = nuevo.getId();
         pacienteService.eliminar(id);
 
-        Paciente buscado = pacienteService.buscarPorId(id);
-        Assertions.assertNull(buscado);
+        Optional<Paciente> buscado = pacienteService.buscarPorId(id);
+        Assertions.assertFalse(buscado.isPresent());
     }
 }
