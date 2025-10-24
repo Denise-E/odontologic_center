@@ -65,6 +65,22 @@ public class TurnoController {
         return ResponseEntity.ok(turnos);
     }
 
+    // Buscar turnos por paciente
+    @GetMapping("/paciente/{pacienteId}")
+    public ResponseEntity<List<TurnoDTO>> buscarPorPaciente(@PathVariable Integer pacienteId) {
+        LOGGER.info("Buscando turnos del paciente ID: " + pacienteId);
+        List<TurnoDTO> turnos = turnoService.buscarPorPacienteId(pacienteId);
+        return ResponseEntity.ok(turnos);
+    }
+
+    // Buscar turnos por odontólogo
+    @GetMapping("/odontologo/{odontologoId}")
+    public ResponseEntity<List<TurnoDTO>> buscarPorOdontologo(@PathVariable Integer odontologoId) {
+        LOGGER.info("Buscando turnos del odontólogo ID: " + odontologoId);
+        List<TurnoDTO> turnos = turnoService.buscarPorOdontologoId(odontologoId);
+        return ResponseEntity.ok(turnos);
+    }
+
     // Actualizar turno
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarTurno(@PathVariable Integer id, @RequestBody TurnoDTO turnoDTO) {

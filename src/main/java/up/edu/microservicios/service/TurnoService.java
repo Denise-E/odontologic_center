@@ -85,6 +85,20 @@ public class TurnoService {
         turnoRepository.deleteById(id);
     }
 
+    // Buscar turnos por paciente
+    public List<TurnoDTO> buscarPorPacienteId(Integer pacienteId) {
+        return turnoRepository.findByPacienteId(pacienteId).stream()
+                .map(this::entidadADto)
+                .collect(Collectors.toList());
+    }
+
+    // Buscar turnos por odontólogo
+    public List<TurnoDTO> buscarPorOdontologoId(Integer odontologoId) {
+        return turnoRepository.findByOdontologoId(odontologoId).stream()
+                .map(this::entidadADto)
+                .collect(Collectors.toList());
+    }
+
     // Convertir Entidad a DTO
     private TurnoDTO entidadADto(Turno turno) {
         TurnoDTO dto = new TurnoDTO();

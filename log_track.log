@@ -417,3 +417,9 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-10-23 21:34:08] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@f7835bc
 [2025-10-23 21:34:15] [ INFO ] [PacienteController:69] Creando paciente: up.edu.microservicios.entity.Paciente@74543d82
 [2025-10-23 21:34:15] [ INFO ] [PacienteController:71] Paciente creado: up.edu.microservicios.entity.Paciente@74543d82
+[2025-10-23 21:46:12] [ INFO ] [PacienteController:69] Creando paciente: up.edu.microservicios.entity.Paciente@29b67964
+[2025-10-23 21:46:12] [ INFO ] [PacienteController:71] Paciente creado: up.edu.microservicios.entity.Paciente@29b67964
+[2025-10-23 21:46:15] [ INFO ] [OdontologoController:60] Creando odontologo: up.edu.microservicios.entity.Odontologo@2fc7d090
+[2025-10-23 21:46:15] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@2fc7d090
+[2025-10-23 21:46:18] [ INFO ] [TurnoController:27] Creando turno: up.edu.microservicios.dto.TurnoDTO@6d977824
+[2025-10-23 21:46:18] [ INFO ] [TurnoController:29] Turno creado: up.edu.microservicios.dto.TurnoDTO@55eeec1e
