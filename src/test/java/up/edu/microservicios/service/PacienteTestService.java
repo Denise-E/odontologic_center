@@ -24,9 +24,7 @@ public class PacienteTestService {
 
     @Test
     public void testGuardar() {
-        Domicilio domicilio = domicilioService.guardar(
-                new Domicilio(null, "Av Siempre Viva", 742, "Springfield", "USA")
-        );
+        Domicilio domicilio = new Domicilio(null, "Av Siempre Viva", 742, "Springfield", "USA");
 
         Paciente nuevo = new Paciente(
                 null,
@@ -47,14 +45,12 @@ public class PacienteTestService {
         Assertions.assertEquals(LocalDate.of(2025, 10, 9), guardado.getFechaIngreso());
         Assertions.assertEquals("homero@springfield.com", guardado.getEmail());
         Assertions.assertNotNull(guardado.getDomicilio());
-        Assertions.assertEquals(domicilio.getId(), guardado.getDomicilio().getId());
+        Assertions.assertNotNull(guardado.getDomicilio().getId(), "El domicilio debe tener ID después de guardar");
     }
 
     @Test
     public void testBuscarPorId() {
-        Domicilio domicilio = domicilioService.guardar(
-                new Domicilio(null, "Calle 123", 456, "CABA", "Buenos Aires")
-        );
+        Domicilio domicilio = new Domicilio(null, "Calle 123", 456, "CABA", "Buenos Aires");
         Paciente pacienteCreado = pacienteService.guardar(
                 new Paciente(null, "Federico", "Rojas", "1111", LocalDate.now(), domicilio, "federico@mail.com")
         );
@@ -80,9 +76,7 @@ public class PacienteTestService {
 
     @Test
     public void testActualizarPorId() {
-        Domicilio domicilio = domicilioService.guardar(
-                new Domicilio(null, "Calle 123", 456, "CABA", "Buenos Aires")
-        );
+        Domicilio domicilio = new Domicilio(null, "Calle 123", 456, "CABA", "Buenos Aires");
 
         Paciente paciente = pacienteService.guardar(
                 new Paciente(null, "Juan", "Pérez", "11111111", LocalDate.of(2024, 5, 5), domicilio, "juan@mail.com")
@@ -111,9 +105,7 @@ public class PacienteTestService {
 
     @Test
     public void testEliminarPorId() {
-        Domicilio domicilio = domicilioService.guardar(
-                new Domicilio(null, "Calle Falsa", 123, "Springfield", "USA")
-        );
+        Domicilio domicilio = new Domicilio(null, "Calle Falsa", 123, "Springfield", "USA");
         Paciente nuevo = pacienteService.guardar(
                 new Paciente(null, "Laura", "Gómez", "12345678", LocalDate.now(), domicilio, "laura@mail.com")
         );

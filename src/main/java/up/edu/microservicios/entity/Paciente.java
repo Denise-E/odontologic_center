@@ -20,7 +20,7 @@ public class Paciente {
     @Column(unique = true)
     private String numeroContacto;
     private LocalDate fechaIngreso;
-    @OneToOne(cascade = CascadeType.ALL) // al guardar y actualizar un paciente que impacte a este
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
     @Column(unique = true)

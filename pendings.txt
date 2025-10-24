@@ -1,2 +1,9 @@
 
 Check -> Tests
+
+> Validar fechas turnos posterior a hoy
+
+> Solucionar DTO con Getter y Setter (clase pojo - Plain Old Java Object). ¿Usar object mapper libreria de maven?
+
+
+> Verificar manejo DTO en Turno
