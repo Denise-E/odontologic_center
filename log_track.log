@@ -413,3 +413,7 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-10-23 20:51:53] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@53e3a56
 [2025-10-23 20:51:56] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1
 [2025-10-23 20:51:57] [ INFO ] [OdontologoController:80] Eliminando odontologo: 1
+[2025-10-23 21:34:08] [ INFO ] [OdontologoController:60] Creando odontologo: up.edu.microservicios.entity.Odontologo@f7835bc
+[2025-10-23 21:34:08] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@f7835bc
+[2025-10-23 21:34:15] [ INFO ] [PacienteController:69] Creando paciente: up.edu.microservicios.entity.Paciente@74543d82
+[2025-10-23 21:34:15] [ INFO ] [PacienteController:71] Paciente creado: up.edu.microservicios.entity.Paciente@74543d82
