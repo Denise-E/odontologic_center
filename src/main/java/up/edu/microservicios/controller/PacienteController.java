@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import up.edu.microservicios.entity.Paciente;
 import org.springframework.http.ResponseEntity;
+import up.edu.microservicios.exception.ResourceNotFoundException;
 import up.edu.microservicios.service.PacienteService;
 
 import java.util.HashMap;
@@ -45,6 +46,20 @@ public class PacienteController {
             return ResponseEntity.ok(pacientes);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay pacientes registrados por el momento");
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Paciente> buscarPorEmail(@PathVariable String email) throws ResourceNotFoundException {
+        LOGGER.info("Buscando paciente por email: " + email);
+        Optional<Paciente> pacienteBuscado = pacienteService.buscarPorEmail(email);
+        
+        if (pacienteBuscado.isPresent()) {
+            LOGGER.info("Paciente encontrado: " + pacienteBuscado.get());
+            return ResponseEntity.ok(pacienteBuscado.get());
+        }
+        
+        LOGGER.warn("Paciente no encontrado con email: " + email);
+        throw new ResourceNotFoundException("No se encontró ningún paciente con el email: " + email);
     }
 
     @PostMapping
