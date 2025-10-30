@@ -1,7 +1,9 @@
 package up.edu.microservicios.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import up.edu.microservicios.entity.Paciente;
 import org.springframework.http.ResponseEntity;
 import up.edu.microservicios.service.PacienteService;
@@ -32,7 +34,8 @@ public class PacienteController {
         if(pacienteBuscado.isPresent()){
             return ResponseEntity.ok(pacienteBuscado.get());
         }
-        return ResponseEntity.notFound().build();
+        // return ResponseEntity.notFound().build();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
     }
 
     @GetMapping
