@@ -8,8 +8,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice // Handler de las exceptions
 public class GlobalException {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handlerNotFoundExcepiton(ResourceNotFoundException ex){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handlerResourceNotFoundException(ResourceNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(EmailInvalidFormatException.class)
+    public ResponseEntity<String> handlerEmailInvalidFormatException(EmailInvalidFormatException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 }
