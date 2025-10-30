@@ -34,7 +34,6 @@ public class PacienteController {
         if(pacienteBuscado.isPresent()){
             return ResponseEntity.ok(pacienteBuscado.get());
         }
-        // return ResponseEntity.notFound().build();
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
     }
 
@@ -45,7 +44,7 @@ public class PacienteController {
         if(pacientes != null){
             return ResponseEntity.ok(pacientes);
         }
-        return ResponseEntity.notFound().build();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay pacientes registrados por el momento");
     }
 
     @PostMapping
@@ -93,9 +92,7 @@ public class PacienteController {
         
         Optional<Paciente> pacienteExistente = pacienteService.buscarPorId(id);
         if (pacienteExistente.isEmpty()) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Paciente no encontrado");
-            return ResponseEntity.status(404).body(response);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
         }
         
         pacienteService.eliminar(id);
@@ -112,9 +109,7 @@ public class PacienteController {
 
         Optional<Paciente> pacienteOpt = pacienteService.buscarPorId(id);
         if (pacienteOpt.isEmpty()) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Paciente no encontrado");
-            return ResponseEntity.status(404).body(response);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado");
         }
 
         Paciente pacienteExistente = pacienteOpt.get();

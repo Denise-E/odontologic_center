@@ -3,3 +3,7 @@
 
 
 > Verificar manejo DTO en Turno
+
+> Crear get paciente por mail
+
+> Endpointa faltantes de turnos

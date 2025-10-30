@@ -1,8 +1,10 @@
 package up.edu.microservicios.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import up.edu.microservicios.entity.Odontologo;
 import up.edu.microservicios.service.OdontologoService;
 
@@ -32,7 +34,8 @@ public class OdontologoController {
         if(odontologoBuscado.isPresent()){
             return ResponseEntity.ok(odontologoBuscado.get());
         }
-        return ResponseEntity.notFound().build();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Odontologo no encontrado");
+
     }
 
     @GetMapping
@@ -42,7 +45,7 @@ public class OdontologoController {
         if(odontologos != null){
             return ResponseEntity.ok(odontologos);
         }
-        return ResponseEntity.notFound().build();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay odontologos registrados por el momento");
     }
 
     @PostMapping
@@ -81,9 +84,7 @@ public class OdontologoController {
         
         Optional<Odontologo> odontologoExistente = odontologoService.buscarPorId(id);
         if (odontologoExistente.isEmpty()) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Odontologo no encontrado");
-            return ResponseEntity.status(404).body(response);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Odontologo no encontrado");
         }
         
         odontologoService.eliminar(id);
@@ -100,9 +101,7 @@ public class OdontologoController {
 
         Optional<Odontologo> odontologoOpt = odontologoService.buscarPorId(id);
         if (odontologoOpt.isEmpty()) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Odontologo no encontrado");
-            return ResponseEntity.status(404).body(response);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Odontologo no encontrado");
         }
 
         Odontologo odontologoExistente = odontologoOpt.get();
