@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import up.edu.microservicios.dto.TurnoDTO;
+import up.edu.microservicios.exception.ResourceNotFoundException;
 import up.edu.microservicios.service.TurnoService;
 
 import java.util.HashMap;
@@ -24,28 +25,16 @@ public class TurnoController {
 
     // Crear turno - Recibe y devuelve DTO
     @PostMapping
-    public ResponseEntity<?> crearTurno(@RequestBody TurnoDTO turnoDTO) {
-        try {
-            LOGGER.info("Creando turno: " + turnoDTO);
-            TurnoDTO turnoCreado = turnoService.guardar(turnoDTO);
-            LOGGER.info("Turno creado: " + turnoCreado);
-            return ResponseEntity.ok(turnoCreado);
-        } catch (RuntimeException e) {
-            LOGGER.error("Error al crear turno: " + e.getMessage());
-            Map<String, String> error = new HashMap<>();
-            error.put("message", e.getMessage());
-            return ResponseEntity.badRequest().body(error);
-        } catch (Exception e) {
-            LOGGER.error("Error al crear turno", e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Ocurrió un error al procesar la solicitud: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(error);
-        }
+    public ResponseEntity<TurnoDTO> crearTurno(@RequestBody TurnoDTO turnoDTO) {
+        LOGGER.info("Creando turno: " + turnoDTO);
+        TurnoDTO turnoCreado = turnoService.guardar(turnoDTO);
+        LOGGER.info("Turno creado: " + turnoCreado);
+        return ResponseEntity.ok(turnoCreado);
     }
 
     // Buscar turno por ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<TurnoDTO> buscarPorId(@PathVariable Integer id) {
         LOGGER.info("Buscando turno por ID: " + id);
         Optional<TurnoDTO> turnoDTO = turnoService.buscarPorId(id);
         
@@ -54,7 +43,7 @@ public class TurnoController {
             return ResponseEntity.ok(turnoDTO.get());
         }
 
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turno no encontrado");
+        throw new ResourceNotFoundException("Turno con ID " + id + " no encontrado");
     }
 
     // Buscar todos los turnos
@@ -64,7 +53,7 @@ public class TurnoController {
         List<TurnoDTO> turnos = turnoService.buscarTodos();
 
         if (turnos.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay turnos registrados por el momento");
+            throw new ResourceNotFoundException("No hay turnos registrados por el momento");
         }
         return ResponseEntity.ok(turnos);
     }
@@ -75,7 +64,7 @@ public class TurnoController {
         LOGGER.info("Buscando turnos del paciente ID: " + pacienteId);
         List<TurnoDTO> turnos = turnoService.buscarPorPacienteId(pacienteId);
         if (turnos.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay turnos registrados para el paciente");
+            throw new ResourceNotFoundException("No hay turnos registrados para el paciente con ID " + pacienteId);
         }
         return ResponseEntity.ok(turnos);
     }
@@ -86,34 +75,23 @@ public class TurnoController {
         LOGGER.info("Buscando turnos del odontólogo ID: " + odontologoId);
         List<TurnoDTO> turnos = turnoService.buscarPorOdontologoId(odontologoId);
         if (turnos.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay turnos registrados para el odontologo");
+            throw new ResourceNotFoundException("No hay turnos registrados para el odontólogo con ID " + odontologoId);
         }
         return ResponseEntity.ok(turnos);
     }
 
     // Actualizar turno
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarTurno(@PathVariable Integer id, @RequestBody TurnoDTO turnoDTO) {
-        try {
-            LOGGER.info("Actualizando turno con ID: " + id);
-            TurnoDTO turnoActualizado = turnoService.actualizar(id, turnoDTO);
-            LOGGER.info("Turno actualizado: " + turnoActualizado);
-            return ResponseEntity.ok(turnoActualizado);
-        } catch (RuntimeException e) {
-            LOGGER.error("Error al actualizar turno: " + e.getMessage());
-            Map<String, String> error = new HashMap<>();
-            error.put("message", e.getMessage());
-            
-            if (e.getMessage().contains("no encontrado")) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turno no encontrado");
-            }
-            return ResponseEntity.badRequest().body(error);
-        } catch (Exception e) {
-            LOGGER.error("Error al actualizar turno", e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Ocurrió un error al procesar la solicitud: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+    public ResponseEntity<TurnoDTO> actualizarTurno(@PathVariable Integer id, @RequestBody TurnoDTO turnoDTO) {
+        LOGGER.info("Actualizando turno con ID: " + id);
+        Optional<TurnoDTO> turnoExistente = turnoService.buscarPorId(id);
+        if (turnoExistente.isEmpty()) {
+            throw new ResourceNotFoundException("Turno con ID " + id + " no encontrado");
         }
+        
+        TurnoDTO turnoActualizado = turnoService.actualizar(id, turnoDTO);
+        LOGGER.info("Turno actualizado: " + turnoActualizado);
+        return ResponseEntity.ok(turnoActualizado);
     }
 
     // Eliminar turno
@@ -123,7 +101,7 @@ public class TurnoController {
         
         Optional<TurnoDTO> turnoExistente = turnoService.buscarPorId(id);
         if (turnoExistente.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Turno no encontrado");
+            throw new ResourceNotFoundException("Turno con ID " + id + " no encontrado");
         }
         
         turnoService.eliminar(id);
