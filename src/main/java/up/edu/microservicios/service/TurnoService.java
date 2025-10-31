@@ -8,6 +8,7 @@ import up.edu.microservicios.entity.Paciente;
 import up.edu.microservicios.entity.Turno;
 import up.edu.microservicios.repository.TurnoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,9 +52,12 @@ public class TurnoService {
 
     // Buscar todos
     public List<TurnoDTO> buscarTodos() {
-        return turnoRepository.findAll().stream()
-                .map(this::entidadADto)
-                .collect(Collectors.toList());
+        List<Turno> turnos = turnoRepository.findAll();
+        List<TurnoDTO> turnosDTO = new ArrayList<>();
+        for (Turno turno : turnos) {
+            turnosDTO.add(entidadADto(turno));
+        }
+        return turnosDTO;
     }
 
     // Actualizar turno

@@ -22,7 +22,7 @@ public class Paciente {
     @Column(unique = true)
     private String numeroContacto;
     private LocalDate fechaIngreso;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
     @Column(unique = true)
