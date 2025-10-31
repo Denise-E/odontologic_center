@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import up.edu.microservicios.entity.Paciente;
 import org.springframework.http.ResponseEntity;
+import up.edu.microservicios.exception.DuplicateResourceException;
 import up.edu.microservicios.exception.ResourceNotFoundException;
 import up.edu.microservicios.service.PacienteService;
 
@@ -63,42 +64,24 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearPaciente(@RequestBody Paciente paciente) {
-        try {
-            // Validar email único
-            Optional<Paciente> pacientePorEmail = pacienteService.buscarPorEmail(paciente.getEmail());
-            if(pacientePorEmail.isPresent()){
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "El email " + paciente.getEmail() + " ya está registrado");
-                response.put("field", "email");
-                return ResponseEntity.status(409).body(response); // 409 Conflict
-            }
-
-            // Validar número de contacto único
-            Optional<Paciente> pacientePorTelefono = pacienteService.buscarPorNumeroContacto(paciente.getNumeroContacto());
-            if(pacientePorTelefono.isPresent()){
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "El número de contacto " + paciente.getNumeroContacto() + " ya está registrado");
-                response.put("field", "numeroContacto");
-                return ResponseEntity.status(409).body(response); // 409 Conflict
-            }
-
-            LOGGER.info("Creando paciente: " + paciente);
-            Paciente pacienteCreado = pacienteService.guardar(paciente);
-            LOGGER.info("Paciente creado: "+pacienteCreado);
-            if (pacienteCreado != null) {
-                return ResponseEntity.ok(pacienteCreado);
-            } else {
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "No se pudo crear el paciente");
-                return ResponseEntity.internalServerError().body(response);
-            }
-        } catch (Exception e) {
-            LOGGER.error("Error al crear paciente", e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Ocurrió un error al procesar la solicitud: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+    public ResponseEntity<Paciente> crearPaciente(@RequestBody Paciente paciente) {
+        // Validar email único
+        Optional<Paciente> pacientePorEmail = pacienteService.buscarPorEmail(paciente.getEmail());
+        if(pacientePorEmail.isPresent()){
+            throw new DuplicateResourceException("El email " + paciente.getEmail() + " ya está registrado");
         }
+
+        // Validar número de contacto único
+        Optional<Paciente> pacientePorTelefono = pacienteService.buscarPorNumeroContacto(paciente.getNumeroContacto());
+        if(pacientePorTelefono.isPresent()){
+            throw new DuplicateResourceException("El número de contacto " + paciente.getNumeroContacto() + " ya está registrado");
+        }
+
+        LOGGER.info("Creando paciente: " + paciente);
+        Paciente pacienteCreado = pacienteService.guardar(paciente);
+        LOGGER.info("Paciente creado: " + pacienteCreado);
+        
+        return ResponseEntity.ok(pacienteCreado);
     }
 
     @DeleteMapping("/{id}")

@@ -1,10 +1,7 @@
 
-> Solucionar DTO con Getter y Setter (clase pojo - Plain Old Java Object). ¿Usar object mapper libreria de maven?
-
 > Verificar manejo DTO en Turno
 
 > Endpoint faltantes de turnos
-
 
 
 // OneToMany y ManyToMany son LAZY por defecto -> Tenemos que especificar por ejemplo que al buscar un paciente 

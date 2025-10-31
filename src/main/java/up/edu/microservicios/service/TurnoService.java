@@ -6,8 +6,13 @@ import up.edu.microservicios.dto.TurnoDTO;
 import up.edu.microservicios.entity.Odontologo;
 import up.edu.microservicios.entity.Paciente;
 import up.edu.microservicios.entity.Turno;
+import up.edu.microservicios.exception.AppointmentConflictException;
+import up.edu.microservicios.exception.InvalidDateException;
+import up.edu.microservicios.exception.ResourceNotFoundException;
 import up.edu.microservicios.repository.TurnoRepository;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,15 +29,57 @@ public class TurnoService {
     @Autowired
     private OdontologoService odontologoService;
 
+    private void validarFecha(LocalDate fecha) {
+        if (fecha == null) {
+            throw new InvalidDateException("La fecha del turno no puede ser nula");
+        }
+        
+        // Validar que no sea una fecha pasada
+        if (fecha.isBefore(LocalDate.now())) {
+            throw new InvalidDateException("No se pueden crear turnos en fechas pasadas");
+        }
+        
+        // Validar que no sea domingo (día no laborable)
+        if (fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            throw new InvalidDateException("No se pueden crear turnos los días domingo");
+        }
+    }
+    
+    /**
+     * Valida que no haya conflictos de turnos
+     */
+    private void validarConflictos(Integer pacienteId, Integer odontologoId, LocalDate fecha, Integer turnoIdExcluir) {
+        // Validar que el odontólogo no tenga otro turno en la misma fecha
+        Optional<Turno> turnoOdontologo = turnoRepository.findByOdontologoIdAndFecha(odontologoId, fecha);
+        if (turnoOdontologo.isPresent() && !turnoOdontologo.get().getId().equals(turnoIdExcluir)) {
+            throw new AppointmentConflictException("El odontólogo ya tiene un turno asignado en la fecha " + fecha);
+        }
+        
+        // Validar que el paciente no tenga otro turno en la misma fecha
+        Optional<Turno> turnoPaciente = turnoRepository.findByPacienteIdAndFecha(pacienteId, fecha);
+        if (turnoPaciente.isPresent() && !turnoPaciente.get().getId().equals(turnoIdExcluir)) {
+            throw new AppointmentConflictException("El paciente ya tiene un turno asignado en la fecha " + fecha);
+        }
+    }
+
     // Guardar un turno (recibe DTO, devuelve DTO)
     public TurnoDTO guardar(TurnoDTO turnoDTO) {
         // Validar que existan paciente y odontólogo
         Optional<Paciente> paciente = pacienteService.buscarPorId(turnoDTO.getPacienteId());
         Optional<Odontologo> odontologo = odontologoService.buscarPorId(turnoDTO.getOdontologoId());
         
-        if (paciente.isEmpty() || odontologo.isEmpty()) {
-            throw new RuntimeException("Paciente u Odontólogo no encontrado");
+        if (paciente.isEmpty()) {
+            throw new ResourceNotFoundException("Paciente con ID " + turnoDTO.getPacienteId() + " no encontrado");
         }
+        if (odontologo.isEmpty()) {
+            throw new ResourceNotFoundException("Odontólogo con ID " + turnoDTO.getOdontologoId() + " no encontrado");
+        }
+        
+        // Validar fecha del turno
+        validarFecha(turnoDTO.getFecha());
+        
+        // Validar conflictos de turnos
+        validarConflictos(turnoDTO.getPacienteId(), turnoDTO.getOdontologoId(), turnoDTO.getFecha(), null);
         
         // Convertir DTO a Entidad
         Turno turno = dtoAEntidad(turnoDTO, paciente.get(), odontologo.get());
@@ -65,16 +112,25 @@ public class TurnoService {
         // Verificar que el turno existe
         Optional<Turno> turnoExistente = turnoRepository.findById(id);
         if (turnoExistente.isEmpty()) {
-            throw new RuntimeException("Turno no encontrado");
+            throw new ResourceNotFoundException("Turno con ID " + id + " no encontrado");
         }
         
         // Validar que existan paciente y odontólogo
         Optional<Paciente> paciente = pacienteService.buscarPorId(turnoDTO.getPacienteId());
         Optional<Odontologo> odontologo = odontologoService.buscarPorId(turnoDTO.getOdontologoId());
         
-        if (paciente.isEmpty() || odontologo.isEmpty()) {
-            throw new RuntimeException("Paciente u Odontólogo no encontrado");
+        if (paciente.isEmpty()) {
+            throw new ResourceNotFoundException("Paciente con ID " + turnoDTO.getPacienteId() + " no encontrado");
         }
+        if (odontologo.isEmpty()) {
+            throw new ResourceNotFoundException("Odontólogo con ID " + turnoDTO.getOdontologoId() + " no encontrado");
+        }
+        
+        // Validar fecha del turno
+        validarFecha(turnoDTO.getFecha());
+        
+        // Validar conflictos de turnos (excluyendo el turno actual)
+        validarConflictos(turnoDTO.getPacienteId(), turnoDTO.getOdontologoId(), turnoDTO.getFecha(), id);
         
         // Actualizar el turno
         turnoDTO.setId(id); // Asegurar que mantiene el ID

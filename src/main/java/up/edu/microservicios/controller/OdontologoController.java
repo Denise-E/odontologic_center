@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import up.edu.microservicios.entity.Odontologo;
+import up.edu.microservicios.exception.DuplicateResourceException;
 import up.edu.microservicios.service.OdontologoService;
 
 import java.util.HashMap;
@@ -49,33 +50,18 @@ public class OdontologoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearOdontologo(@RequestBody Odontologo odontologo) {
-        try {
-            // Validar matrícula única
-            Optional<Odontologo> odontologoPorMatricula = odontologoService.buscarPorMatricula(odontologo.getMatricula());
-            if(odontologoPorMatricula.isPresent()){
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "La matrícula " + odontologo.getMatricula() + " ya está registrada");
-                response.put("field", "matricula");
-                return ResponseEntity.status(409).body(response); // 409 Conflict
-            }
-
-            LOGGER.info("Creando odontologo: " + odontologo);
-            Odontologo odontologoCreado = odontologoService.guardar(odontologo);
-            LOGGER.info("Odontologo creado: "+odontologoCreado);
-            if (odontologoCreado != null) {
-                return ResponseEntity.ok(odontologoCreado);
-            } else {
-                Map<String, String> response = new HashMap<>();
-                response.put("message", "No se pudo crear el odontologo");
-                return ResponseEntity.internalServerError().body(response);
-            }
-        } catch (Exception e) {
-            LOGGER.error("Error al crear odontologo", e);
-            Map<String, String> error = new HashMap<>();
-            error.put("error", "Ocurrió un error al procesar la solicitud: " + e.getMessage());
-            return ResponseEntity.internalServerError().body(error);
+    public ResponseEntity<Odontologo> crearOdontologo(@RequestBody Odontologo odontologo) {
+        // Validar matrícula única
+        Optional<Odontologo> odontologoPorMatricula = odontologoService.buscarPorMatricula(odontologo.getMatricula());
+        if(odontologoPorMatricula.isPresent()){
+            throw new DuplicateResourceException("La matrícula " + odontologo.getMatricula() + " ya está registrada");
         }
+
+        LOGGER.info("Creando odontologo: " + odontologo);
+        Odontologo odontologoCreado = odontologoService.guardar(odontologo);
+        LOGGER.info("Odontologo creado: " + odontologoCreado);
+        
+        return ResponseEntity.ok(odontologoCreado);
     }
 
     @DeleteMapping("/{id}")
