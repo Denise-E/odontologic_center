@@ -1,5 +1,6 @@
 package up.edu.microservicios.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Paciente {
     private String email;
 
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Turno> turnos = new HashSet<>(); // Set porque son datos únicos no duplicados
 
     public Paciente(Integer id, String nombre, String apellido, String numeroContacto, LocalDate fechaIngreso, Domicilio domicilio, String email) {
