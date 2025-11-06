@@ -18,22 +18,22 @@ window.addEventListener('load', function () {
 
             let deleteButton = '<button' +
                                       ' id=' + '\"' + 'btn_delete_od_' + od.id + '\"' +
-                                      ' type="button" onclick="deleteOdBy('+od.id+')" class="btn btn-danger btn_delete">' +
-                                      '&times' +
+                                      ' type="button" onclick="deleteOdBy('+od.id+')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem;">' +
+                                      '🗑️' +
                                       '</button>';
 
-            let updateButton = '<button' +
-                                      ' id=' + '\"' + 'btn_od_id_' + od.id + '\"' +
-                                      ' type="button" onclick="findOdBy('+od.id+')" class="btn btn-info btn_id">' +
-                                      od.id +
+            let viewButton = '<button' +
+                                      ' id=' + '\"' + 'btn_view_od_' + od.id + '\"' +
+                                      ' type="button" onclick="findOdBy('+od.id+')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem;">' +
+                                      '👁️' +
                                       '</button>';
 
-            row.innerHTML = '<td>' + updateButton + '</td>' +
+            row.innerHTML = '<td>' + od.id + '</td>' +
                     '<td class=\"td_od_nombre\">' + (od.nombre || '').toUpperCase() + '</td>' +
                     '<td class=\"td_od_apellido\">' + (od.apellido || '').toUpperCase() + '</td>' +
                     '<td class=\"td_od_matricula\">' + (od.matricula || '') + '</td>' +
                     '<td class=\"td_od_requisitos\">' + (od.requisitosTurnos || '') + '</td>' +
-                    '<td>' + deleteButton + '</td>';
+                    '<td>' + viewButton + ' ' + deleteButton + '</td>';
 
         };
 

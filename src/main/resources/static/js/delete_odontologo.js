@@ -1,4 +1,9 @@
 function deleteOdBy(id) {
+  // Confirmación antes de eliminar
+  if (!confirm('¿Está seguro que desea eliminar este odontólogo?\n\nEsta acción no se puede deshacer.')) {
+    return;
+  }
+
   const url = '/api/odontologos/' + id;
   const settings = {
     method: 'DELETE'
@@ -14,6 +19,7 @@ function deleteOdBy(id) {
       if (row && row.parentNode) {
         row.parentNode.removeChild(row);
       }
+      alert('Odontólogo eliminado exitosamente');
     })
     .catch(err => {
       console.error(err);

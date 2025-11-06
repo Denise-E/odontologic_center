@@ -27,21 +27,26 @@ window.addEventListener('load', function () {
         const row = table.insertRow();
         row.id = 'tr_od_' + created.id;
 
-        const deleteButton = '<button id=\"btn_delete_od_' + created.id + '\" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-danger btn_delete">&times</button>';
-        const updateButton = '<button id=\"btn_od_id_' + created.id + '\" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-info btn_id">' + created.id + '</button>';
+        const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem;">' +
+          '🗑️' +
+          '</button>';
 
-        row.innerHTML = '<td>' + updateButton + '</td>' +
-          '<td class=\"td_od_nombre\">' + (created.nombre || '').toUpperCase() + '</td>' +
-          '<td class=\"td_od_apellido\">' + (created.apellido || '').toUpperCase() + '</td>' +
-          '<td class=\"td_od_matricula\">' + (created.matricula || '') + '</td>' +
-          '<td class=\"td_od_requisitos\">' + (created.requisitosTurnos || '') + '</td>' +
-          '<td>' + deleteButton + '</td>';
+        const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem;">' +
+          '👁️' +
+          '</button>';
+
+        row.innerHTML = '<td>' + created.id + '</td>' +
+          '<td class="td_od_nombre">' + (created.nombre || '').toUpperCase() + '</td>' +
+          '<td class="td_od_apellido">' + (created.apellido || '').toUpperCase() + '</td>' +
+          '<td class="td_od_matricula">' + (created.matricula || '') + '</td>' +
+          '<td class="td_od_requisitos">' + (created.requisitosTurnos || '') + '</td>' +
+          '<td>' + viewButton + ' ' + deleteButton + '</td>';
 
         form.reset();
+        console.log('Odontólogo creado exitosamente:', created);
       })
       .catch(err => {
-        console.error(err);
-        alert('No se pudo crear el odontólogo');
+        console.error('Error al crear odontólogo:', err);
       });
   });
 });
