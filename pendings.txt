@@ -1,9 +1,14 @@
 
 > Verificar manejo DTO en Turno
 
-> Endpoint faltantes de turnos
+> Frontend
+
+> Spring Security
 
 
 // OneToMany y ManyToMany son LAZY por defecto -> Tenemos que especificar por ejemplo que al buscar un paciente 
 nos traiga info del domicilio si así lo queremos. 
 // OneToOne es EAGER (ansioso) por defecto 
+
+
+http://localhost:8080

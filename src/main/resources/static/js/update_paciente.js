@@ -7,15 +7,30 @@ function findBy(id) {
       return response.json();
     })
     .then(data => {
+      // Cargar datos básicos del paciente
       document.getElementById('paciente_id').value = data.id;
       document.getElementById('nombre').value = data.nombre || '';
       document.getElementById('apellido').value = data.apellido || '';
       document.getElementById('numeroContacto').value = data.numeroContacto || '';
-      // fechaIngreso es LocalDate en backend, formato yyyy-MM-dd esperado por input date
       document.getElementById('fechaIngreso').value = data.fechaIngreso || '';
       document.getElementById('email').value = data.email || '';
+      
+      // Cargar datos del domicilio si existen
+      if (data.domicilio) {
+        document.getElementById('calle').value = data.domicilio.calle || '';
+        document.getElementById('numero').value = data.domicilio.numero || '';
+        document.getElementById('localidad').value = data.domicilio.localidad || '';
+        document.getElementById('provincia').value = data.domicilio.provincia || '';
+      } else {
+        document.getElementById('calle').value = '';
+        document.getElementById('numero').value = '';
+        document.getElementById('localidad').value = '';
+        document.getElementById('provincia').value = '';
+      }
 
-      document.getElementById('div_paciente_updating').style.display = 'block';
+      // Abrir el modal de Bootstrap 5
+      const modal = new bootstrap.Modal(document.getElementById('pacienteModal'));
+      modal.show();
     })
     .catch(err => {
       console.error(err);
@@ -23,49 +38,55 @@ function findBy(id) {
     });
 }
 
-// submit del formulario para actualizar
-window.addEventListener('load', function () {
-  const form = document.getElementById('update_paciente_form');
-  if (!form) return;
+// Función para actualizar el paciente
+function updatePaciente() {
+  const id = document.getElementById('paciente_id').value;
+  
+  const payload = {
+    nombre: document.getElementById('nombre').value,
+    apellido: document.getElementById('apellido').value,
+    numeroContacto: document.getElementById('numeroContacto').value,
+    fechaIngreso: document.getElementById('fechaIngreso').value,
+    email: document.getElementById('email').value,
+    domicilio: {
+      calle: document.getElementById('calle').value,
+      numero: document.getElementById('numero').value,
+      localidad: document.getElementById('localidad').value,
+      provincia: document.getElementById('provincia').value
+    }
+  };
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const id = document.getElementById('paciente_id').value;
-    const payload = {
-      nombre: document.getElementById('nombre').value,
-      apellido: document.getElementById('apellido').value,
-      numeroContacto: document.getElementById('numeroContacto').value,
-      fechaIngreso: document.getElementById('fechaIngreso').value,
-      email: document.getElementById('email').value
-    };
-
-    fetch('/api/pacientes/' + id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
+  fetch('/api/pacientes/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Error al actualizar');
+      return response.json();
     })
-      .then(response => {
-        if (!response.ok) throw new Error('Error al actualizar');
-        return response.json();
-      })
-      .then(updated => {
-        // actualizar fila en la tabla sin recargar
-        const row = document.getElementById('tr_' + updated.id);
-        if (row) {
-          row.querySelector('.td_titulo').textContent = (updated.nombre || '').toUpperCase();
-          row.querySelector('.td_categoria').textContent = (updated.apellido || '').toUpperCase();
-        }
-        document.getElementById('div_paciente_updating').style.display = 'none';
-        form.reset();
-      })
-      .catch(err => {
-        console.error(err);
-        alert('No se pudo actualizar el paciente');
-      });
-  });
-});
+    .then(updated => {
+      // Actualizar fila en la tabla sin recargar
+      const row = document.getElementById('tr_' + updated.id);
+      if (row) {
+        row.querySelector('.td_nombre').textContent = (updated.nombre || '').toUpperCase();
+        row.querySelector('.td_apellido').textContent = (updated.apellido || '').toUpperCase();
+        row.querySelector('.td_email').textContent = (updated.email || '');
+      }
+      
+      // Cerrar el modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('pacienteModal'));
+      modal.hide();
+      
+      // Mostrar mensaje de éxito
+      alert('Paciente actualizado exitosamente');
+    })
+    .catch(err => {
+      console.error(err);
+      alert('No se pudo actualizar el paciente');
+    });
+}
 
 

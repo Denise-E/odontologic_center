@@ -1,4 +1,9 @@
 function deleteBy(id) {
+  // Confirmación antes de eliminar
+  if (!confirm('¿Está seguro que desea eliminar este paciente?\n\nEsta acción no se puede deshacer.')) {
+    return; // Si el usuario cancela, no hacer nada
+  }
+
   const url = '/api/pacientes/' + id;
   const settings = {
     method: 'DELETE'
@@ -15,6 +20,8 @@ function deleteBy(id) {
       if (row && row.parentNode) {
         row.parentNode.removeChild(row);
       }
+      // Mostrar mensaje de éxito
+      alert('Paciente eliminado exitosamente');
     })
     .catch(err => {
       console.error(err);

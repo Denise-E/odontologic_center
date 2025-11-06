@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/get_paciente.js"></script>
     <script type="text/javascript" src="js/update_paciente.js"></script>
@@ -61,14 +62,15 @@
                 </form>
             </div>
         </div>
-        <div class="row col-md-6 table-responsive">
+        <div class="row table-responsive">
             <table id="pacienteTable" class="table table-striped">
                 <thead>
                 <tr>
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th></th>
+                    <th>Email</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody id="pacienteTableBody">
@@ -77,40 +79,73 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6" style="display: none;
-											background-color:#e6fffa; padding:10px; border-radius:3px"
-             id="div_paciente_updating">
-            <form id="update_paciente_form">
-                <div class="form-group">
-                    <label >Id:</label>
-                    <input type="text" class="form-control" id="paciente_id" readonly>
+    
+    <!-- Modal para ver/editar paciente -->
+    <div class="modal fade" id="pacienteModal" tabindex="-1" aria-labelledby="pacienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pacienteModalLabel">Detalles del Paciente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="form-group">
-                    <label >Nombre:</label>
-                    <input type="text" class="form-control" placeholder="Nombre" id="nombre">
+                <div class="modal-body">
+                    <form id="update_paciente_form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Id:</strong></label>
+                                    <input type="text" class="form-control" id="paciente_id" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Nombre:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Nombre" id="nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Apellido:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Apellido" id="apellido" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Email:</strong></label>
+                                    <input type="email" class="form-control" placeholder="Email" id="email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Número de contacto:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Número de contacto" id="numeroContacto" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Fecha ingreso:</strong></label>
+                                    <input type="date" class="form-control" id="fechaIngreso" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Calle:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Calle" id="calle">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Número:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Número" id="numero">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Localidad:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Localidad" id="localidad">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Provincia:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Provincia" id="provincia">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label >Apellido:</label>
-                    <input type="text" class="form-control" placeholder="Apellido" id="apellido">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="updatePaciente()">Guardar Cambios</button>
                 </div>
-                <div class="form-group">
-                    <label >Número de contacto:</label>
-                    <input type="text" class="form-control" placeholder="Número de contacto" id="numeroContacto">
-                </div>
-                <div class="form-group">
-                    <label >Fecha ingreso:</label>
-                    <input type="date" class="form-control" id="fechaIngreso">
-                </div>
-                <div class="form-group">
-                    <label >Email:</label>
-                    <input type="email" class="form-control" placeholder="Email" id="email">
-                </div>
-
-
-                <button type="submit" class="btn btn-primary">Modificar</button>
-            </form>
-            <div id="response" style="display:none; margin:10px">
             </div>
         </div>
     </div>
