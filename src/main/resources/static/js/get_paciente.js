@@ -9,8 +9,10 @@ window.addEventListener('load', function () {
       fetch(url,settings)
       .then(response => response.json())
       .then(data => {
+         console.log('Pacientes recibidos del servidor:', data);
 
          for(paciente of data){
+            console.log('Procesando paciente:', paciente);
             //por cada paciente armaremos una fila de la tabla
             var table = document.getElementById("pacienteTable");
             var pacienteRow =table.insertRow();
@@ -21,14 +23,14 @@ window.addEventListener('load', function () {
             let deleteButton = '<button' +
                                       ' id=' + '\"' + 'btn_delete_' + paciente.id + '\"' +
                                       ' type="button" onclick="deleteBy('+paciente.id+')" class="btn btn-danger btn-sm">' +
-                                      '<i class="bi bi-trash"></i>' +
+                                      '🗑️' +
                                       '</button>';
 
             // Botón de ver/editar con ícono de ojo
             let viewButton = '<button' +
                                       ' id=' + '\"' + 'btn_view_' + paciente.id + '\"' +
                                       ' type="button" onclick="findBy('+paciente.id+')" class="btn btn-primary btn-sm">' +
-                                      '<i class="bi bi-eye"></i>' +
+                                      '👁️' +
                                       '</button>';
 
             pacienteRow.innerHTML = '<td>' + paciente.id + '</td>' +

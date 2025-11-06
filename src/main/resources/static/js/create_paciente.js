@@ -25,7 +25,12 @@ window.addEventListener('load', function () {
       body: JSON.stringify(payload)
     })
       .then(response => {
-        if (!response.ok) throw new Error('Error al crear paciente');
+        if (!response.ok) {
+          // Intentar leer el mensaje de error del servidor
+          return response.text().then(text => {
+            throw new Error(text || 'Error al crear paciente');
+          });
+        }
         return response.json();
       })
       .then(created => {
@@ -34,19 +39,27 @@ window.addEventListener('load', function () {
         const row = table.insertRow();
         row.id = 'tr_' + created.id;
 
-        const deleteButton = '<button id=\"btn_delete_' + created.id + '\" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-danger btn_delete">&times</button>';
-        const updateButton = '<button id=\"btn_id_' + created.id + '\" type="button" onclick="findBy(' + created.id + ')" class="btn btn-info btn_id">' + created.id + '</button>';
+        // Botón de eliminar con ícono de tacho
+        const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-danger btn-sm">' +
+          '🗑️' +
+          '</button>';
 
-        row.innerHTML = '<td>' + updateButton + '</td>' +
-          '<td class=\"td_titulo\">' + (created.nombre || '').toUpperCase() + '</td>' +
-          '<td class=\"td_categoria\">' + (created.apellido || '').toUpperCase() + '</td>' +
-          '<td>' + deleteButton + '</td>';
+        // Botón de ver/editar con ícono de ojo
+        const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-primary btn-sm">' +
+          '👁️' +
+          '</button>';
+
+        row.innerHTML = '<td>' + created.id + '</td>' +
+          '<td class="td_nombre">' + (created.nombre || '').toUpperCase() + '</td>' +
+          '<td class="td_apellido">' + (created.apellido || '').toUpperCase() + '</td>' +
+          '<td class="td_email">' + (created.email || '') + '</td>' +
+          '<td>' + viewButton + ' ' + deleteButton + '</td>';
 
         form.reset();
+        console.log('Paciente creado exitosamente:', created);
       })
       .catch(err => {
-        console.error(err);
-        alert('No se pudo crear el paciente');
+        console.error('Error al crear paciente:', err);
       });
   });
 });
