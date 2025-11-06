@@ -5,11 +5,17 @@ window.addEventListener('load', function () {
   form.addEventListener('submit', function (event) {
     event.preventDefault();
 
+    // Obtener fecha actual en formato yyyy-MM-dd
+    const today = new Date();
+    const fechaIngreso = today.getFullYear() + '-' + 
+                         String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                         String(today.getDate()).padStart(2, '0');
+
     const payload = {
       nombre: document.getElementById('c_nombre').value,
       apellido: document.getElementById('c_apellido').value,
       numeroContacto: document.getElementById('c_numeroContacto').value,
-      fechaIngreso: document.getElementById('c_fechaIngreso').value,
+      fechaIngreso: fechaIngreso,
       email: document.getElementById('c_email').value,
       domicilio: {
         calle: document.getElementById('c_calle').value,
