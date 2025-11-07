@@ -20,6 +20,14 @@ function deleteBy(id) {
       if (row && row.parentNode) {
         row.parentNode.removeChild(row);
       }
+      
+      // Verificar si la tabla quedó vacía
+      const tableBody = document.getElementById('pacienteTableBody');
+      if (tableBody.rows.length === 0) {
+        document.getElementById('noPacientesMessage').style.display = 'block';
+        document.getElementById('pacientesTableContainer').style.display = 'none';
+      }
+      
       // Mostrar mensaje de éxito
       alert('Paciente eliminado exitosamente');
     })

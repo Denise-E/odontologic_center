@@ -11,6 +11,18 @@ window.addEventListener('load', function () {
       .then(data => {
          console.log('Pacientes recibidos del servidor:', data);
 
+         // Verificar si hay pacientes
+         if (data.length === 0) {
+            // Mostrar mensaje, ocultar tabla
+            document.getElementById('noPacientesMessage').style.display = 'block';
+            document.getElementById('pacientesTableContainer').style.display = 'none';
+            return;
+         } else {
+            // Mostrar tabla, ocultar mensaje
+            document.getElementById('noPacientesMessage').style.display = 'none';
+            document.getElementById('pacientesTableContainer').style.display = 'flex';
+         }
+
          for(paciente of data){
             console.log('Procesando paciente:', paciente);
             //por cada paciente armaremos una fila de la tabla

@@ -40,6 +40,14 @@ window.addEventListener('load', function () {
         return response.json();
       })
       .then(created => {
+        // Si es el primer paciente, ocultar mensaje y mostrar tabla
+        const noPacientesMsg = document.getElementById('noPacientesMessage');
+        const tableContainer = document.getElementById('pacientesTableContainer');
+        if (noPacientesMsg.style.display !== 'none') {
+          noPacientesMsg.style.display = 'none';
+          tableContainer.style.display = 'flex';
+        }
+
         // agregar fila a la tabla
         const table = document.getElementById('pacienteTable');
         const row = table.insertRow();

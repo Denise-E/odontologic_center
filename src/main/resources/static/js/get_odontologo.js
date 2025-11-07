@@ -10,6 +10,18 @@ window.addEventListener('load', function () {
       .then(response => response.json())
       .then(data => {
 
+         // Verificar si hay odontólogos
+         if (data.length === 0) {
+            // Mostrar mensaje, ocultar tabla
+            document.getElementById('noOdontologosMessage').style.display = 'block';
+            document.getElementById('odontologosTableContainer').style.display = 'none';
+            return;
+         } else {
+            // Mostrar tabla, ocultar mensaje
+            document.getElementById('noOdontologosMessage').style.display = 'none';
+            document.getElementById('odontologosTableContainer').style.display = 'flex';
+         }
+
          for(od of data){
             var table = document.getElementById("odontologoTable");
             var row = table.insertRow();

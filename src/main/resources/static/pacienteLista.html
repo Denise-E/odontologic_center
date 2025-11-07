@@ -58,21 +58,30 @@
                 </form>
             </div>
         </div>
-        <div class="row table-responsive">
-            <table id="pacienteTable" class="table table-bordered">
-                <thead class="table-light">
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody id="pacienteTableBody">
+        
+        <h2 class="text-center mt-4 mb-3">Listado de Pacientes</h2>
+        
+        <div id="noPacientesMessage" class="alert alert-info text-center" style="display: none;">
+            <h5>Todavía no hay pacientes registrados</h5>
+        </div>
+        
+        <div id="pacientesTableContainer" class="row justify-content-center">
+            <div class="col-lg-10 table-responsive">
+                <table id="pacienteTable" class="table table-bordered">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody id="pacienteTableBody">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     

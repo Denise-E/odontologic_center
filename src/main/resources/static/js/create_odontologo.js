@@ -22,6 +22,14 @@ window.addEventListener('load', function () {
         return response.json();
       })
       .then(created => {
+        // Si es el primer odontólogo, ocultar mensaje y mostrar tabla
+        const noOdontologosMsg = document.getElementById('noOdontologosMessage');
+        const tableContainer = document.getElementById('odontologosTableContainer');
+        if (noOdontologosMsg.style.display !== 'none') {
+          noOdontologosMsg.style.display = 'none';
+          tableContainer.style.display = 'flex';
+        }
+
         // agregar fila a la tabla
         const table = document.getElementById('odontologoTable');
         const row = table.insertRow();
