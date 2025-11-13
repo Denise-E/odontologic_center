@@ -1,7 +1,6 @@
 package up.edu.microservicios.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class TurnoDTO {
     private Integer id;
     private Integer pacienteId;
@@ -25,4 +23,22 @@ public class TurnoDTO {
     // Objetos completos para el frontend
     private Paciente paciente;
     private Odontologo odontologo;
+    
+    public TurnoDTO(Integer id, Integer pacienteId, Integer odontologoId, LocalDateTime fecha) {
+        this.id = id;
+        this.pacienteId = pacienteId;
+        this.odontologoId = odontologoId;
+        this.fecha = fecha;
+    }
+    
+    // Constructor completo con todas las propiedades
+    public TurnoDTO(Integer id, Integer pacienteId, Integer odontologoId, LocalDateTime fecha, 
+                    Paciente paciente, Odontologo odontologo) {
+        this.id = id;
+        this.pacienteId = pacienteId;
+        this.odontologoId = odontologoId;
+        this.fecha = fecha;
+        this.paciente = paciente;
+        this.odontologo = odontologo;
+    }
 }

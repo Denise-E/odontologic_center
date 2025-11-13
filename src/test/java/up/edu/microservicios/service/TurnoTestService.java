@@ -10,6 +10,7 @@ import up.edu.microservicios.entity.Odontologo;
 import up.edu.microservicios.entity.Paciente;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +37,13 @@ public class TurnoTestService {
                 new Odontologo("Dr. Carlos", "López", "MAT123")
         );
 
-        // Crear turno usando DTO
+        // Crear turno usando DTO con fecha futura (lunes 5 de enero de 2026, 14:30)
+        LocalDateTime fechaFutura = LocalDateTime.of(2026, 1, 5, 14, 30, 0);
         TurnoDTO turnoDTO = new TurnoDTO(
                 null,
                 paciente.getId(),
                 odontologo.getId(),
-                LocalDate.of(2025, 10, 25)
+                fechaFutura
         );
 
         TurnoDTO turnoGuardado = turnoService.guardar(turnoDTO);
@@ -49,7 +51,7 @@ public class TurnoTestService {
         Assertions.assertNotNull(turnoGuardado.getId(), "El turno debe tener ID después de guardar");
         Assertions.assertEquals(paciente.getId(), turnoGuardado.getPacienteId());
         Assertions.assertEquals(odontologo.getId(), turnoGuardado.getOdontologoId());
-        Assertions.assertEquals(LocalDate.of(2025, 10, 25), turnoGuardado.getFecha());
+        Assertions.assertEquals(fechaFutura, turnoGuardado.getFecha());
     }
 
 
@@ -60,12 +62,12 @@ public class TurnoTestService {
                 new Odontologo("Dr. María", "García", "MAT456")
         );
 
-        // Intentar crear turno con paciente inexistente (ID = 9999)
+        // Intentar crear turno con paciente inexistente (ID = 9999, martes 6 de enero de 2026)
         TurnoDTO turnoDTO = new TurnoDTO(
                 null,
                 9999,
                 odontologo.getId(),
-                LocalDate.of(2025, 10, 25)
+                LocalDateTime.of(2026, 1, 6, 10, 0, 0)
         );
 
         // Debe lanzar excepción
@@ -83,12 +85,12 @@ public class TurnoTestService {
                 new Paciente(null, "Laura", "Martínez", "789012", LocalDate.now(), null, "laura@test.com")
         );
 
-        // Intentar crear turno con odontólogo inexistente (ID = 9999)
+        // Intentar crear turno con odontólogo inexistente (ID = 9999, miércoles 7 de enero de 2026)
         TurnoDTO turnoDTO = new TurnoDTO(
                 null,
                 paciente.getId(),
                 9999,
-                LocalDate.of(2025, 10, 25)
+                LocalDateTime.of(2026, 1, 7, 10, 0, 0)
         );
 
         // Debe lanzar excepción
@@ -109,12 +111,13 @@ public class TurnoTestService {
                 new Odontologo("Dra. Ana", "Rodríguez", "MAT789")
         );
 
-        // Crear turno
+        // Crear turno (jueves 8 de enero de 2026, 9:00)
+        LocalDateTime fechaTurno = LocalDateTime.of(2026, 1, 8, 9, 0, 0);
         TurnoDTO turnoDTO = new TurnoDTO(
                 null,
                 paciente.getId(),
                 odontologo.getId(),
-                LocalDate.of(2025, 11, 15)
+                fechaTurno
         );
         TurnoDTO turnoGuardado = turnoService.guardar(turnoDTO);
 
@@ -126,7 +129,8 @@ public class TurnoTestService {
         Assertions.assertEquals(turnoGuardado.getId(), turno.getId());
         Assertions.assertEquals(paciente.getId(), turno.getPacienteId());
         Assertions.assertEquals(odontologo.getId(), turno.getOdontologoId());
-        Assertions.assertEquals(LocalDate.of(2025, 11, 15), turno.getFecha());
+        // Comparar truncando a segundos (la BD puede truncar nanosegundos)
+        Assertions.assertEquals(fechaTurno.withNano(0), turno.getFecha().withNano(0));
     }
 
     @Test
@@ -148,9 +152,9 @@ public class TurnoTestService {
                 new Odontologo("Dr. Luis", "Fernández", "MAT111")
         );
 
-        // Crear varios turnos
-        turnoService.guardar(new TurnoDTO(null, paciente1.getId(), odontologo.getId(), LocalDate.of(2025, 10, 1)));
-        turnoService.guardar(new TurnoDTO(null, paciente2.getId(), odontologo.getId(), LocalDate.of(2025, 10, 2)));
+        // Crear varios turnos (viernes 9 y lunes 12 de enero de 2026)
+        turnoService.guardar(new TurnoDTO(null, paciente1.getId(), odontologo.getId(), LocalDateTime.of(2026, 1, 9, 10, 0, 0)));
+        turnoService.guardar(new TurnoDTO(null, paciente2.getId(), odontologo.getId(), LocalDateTime.of(2026, 1, 12, 11, 0, 0)));
 
         List<TurnoDTO> turnos = turnoService.buscarTodos();
 
@@ -171,9 +175,9 @@ public class TurnoTestService {
                 new Odontologo("Dra. Carmen", "Ruiz", "MAT333")
         );
 
-        // Crear dos turnos para el mismo paciente
-        turnoService.guardar(new TurnoDTO(null, paciente.getId(), odontologo1.getId(), LocalDate.of(2025, 11, 1)));
-        turnoService.guardar(new TurnoDTO(null, paciente.getId(), odontologo2.getId(), LocalDate.of(2025, 11, 5)));
+        // Crear dos turnos para el mismo paciente (martes 13 y miércoles 14 de enero de 2026)
+        turnoService.guardar(new TurnoDTO(null, paciente.getId(), odontologo1.getId(), LocalDateTime.of(2026, 1, 13, 10, 0, 0)));
+        turnoService.guardar(new TurnoDTO(null, paciente.getId(), odontologo2.getId(), LocalDateTime.of(2026, 1, 14, 14, 0, 0)));
 
         // Buscar turnos del paciente
         List<TurnoDTO> turnosPaciente = turnoService.buscarPorPacienteId(paciente.getId());
@@ -197,9 +201,9 @@ public class TurnoTestService {
                 new Odontologo("Dr. Fernando", "Ramos", "MAT444")
         );
 
-        // Crear dos turnos para el mismo odontólogo
-        turnoService.guardar(new TurnoDTO(null, paciente1.getId(), odontologo.getId(), LocalDate.of(2025, 11, 10)));
-        turnoService.guardar(new TurnoDTO(null, paciente2.getId(), odontologo.getId(), LocalDate.of(2025, 11, 12)));
+        // Crear dos turnos para el mismo odontólogo (jueves 15 y viernes 16 de enero de 2026)
+        turnoService.guardar(new TurnoDTO(null, paciente1.getId(), odontologo.getId(), LocalDateTime.of(2026, 1, 15, 9, 0, 0)));
+        turnoService.guardar(new TurnoDTO(null, paciente2.getId(), odontologo.getId(), LocalDateTime.of(2026, 1, 16, 15, 30, 0)));
 
         // Buscar turnos del odontólogo
         List<TurnoDTO> turnosOdontologo = turnoService.buscarPorOdontologoId(odontologo.getId());
@@ -223,28 +227,30 @@ public class TurnoTestService {
                 new Odontologo("Dra. Patricia", "Morales", "MAT555")
         );
 
-        // Crear turno inicial
+        // Crear turno inicial (lunes 19 de enero de 2026, 10:00)
+        LocalDateTime fechaInicial = LocalDateTime.of(2026, 1, 19, 10, 0, 0);
         TurnoDTO turnoDTO = new TurnoDTO(
                 null,
                 paciente1.getId(),
                 odontologo.getId(),
-                LocalDate.of(2025, 12, 1)
+                fechaInicial
         );
         TurnoDTO turnoGuardado = turnoService.guardar(turnoDTO);
 
-        // Actualizar el turno (cambiar paciente y fecha)
+        // Actualizar el turno (cambiar paciente y fecha a martes 20 de enero de 2026, 16:30)
+        LocalDateTime fechaActualizada = LocalDateTime.of(2026, 1, 20, 16, 30, 0);
         TurnoDTO turnoActualizado = new TurnoDTO(
                 turnoGuardado.getId(),
                 paciente2.getId(),
                 odontologo.getId(),
-                LocalDate.of(2025, 12, 15)
+                fechaActualizada
         );
         TurnoDTO resultado = turnoService.actualizar(turnoGuardado.getId(), turnoActualizado);
 
         Assertions.assertEquals(turnoGuardado.getId(), resultado.getId());
         Assertions.assertEquals(paciente2.getId(), resultado.getPacienteId());
         Assertions.assertEquals(odontologo.getId(), resultado.getOdontologoId());
-        Assertions.assertEquals(LocalDate.of(2025, 12, 15), resultado.getFecha());
+        Assertions.assertEquals(fechaActualizada, resultado.getFecha());
     }
 
     @Test
@@ -257,12 +263,12 @@ public class TurnoTestService {
                 new Odontologo("Dr. Javier", "Navarro", "MAT666")
         );
 
-        // Intentar actualizar turno inexistente
+        // Intentar actualizar turno inexistente (miércoles 21 de enero de 2026)
         TurnoDTO turnoDTO = new TurnoDTO(
                 9999,
                 paciente.getId(),
                 odontologo.getId(),
-                LocalDate.of(2025, 12, 1)
+                LocalDateTime.of(2026, 1, 21, 10, 0, 0)
         );
 
         RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
@@ -282,12 +288,12 @@ public class TurnoTestService {
                 new Odontologo("Dr. Alberto", "Castro", "MAT777")
         );
 
-        // Crear turno
+        // Crear turno (jueves 22 de enero de 2026, 11:00)
         TurnoDTO turnoDTO = new TurnoDTO(
                 null,
                 paciente.getId(),
                 odontologo.getId(),
-                LocalDate.of(2025, 11, 20)
+                LocalDateTime.of(2026, 1, 22, 11, 0, 0)
         );
         TurnoDTO turnoGuardado = turnoService.guardar(turnoDTO);
 
@@ -301,34 +307,6 @@ public class TurnoTestService {
         // Verificar que ya no existe
         Optional<TurnoDTO> turnoDespues = turnoService.buscarPorId(turnoGuardado.getId());
         Assertions.assertFalse(turnoDespues.isPresent());
-    }
-
-    @Test
-    public void testMultiplesTurnosMismoPaciente() {
-        // Un paciente puede tener múltiples turnos
-        Paciente paciente = pacienteService.guardar(
-                new Paciente(null, "Daniela", "Sánchez", "101010", LocalDate.now(), null, "daniela@test.com")
-        );
-        Odontologo odontologo1 = odontologoService.guardar(
-                new Odontologo("Dr. Martín", "González", "MAT888")
-        );
-        Odontologo odontologo2 = odontologoService.guardar(
-                new Odontologo("Dra. Lucía", "Ramírez", "MAT999")
-        );
-
-        // Crear dos turnos para el mismo paciente
-        TurnoDTO turno1 = turnoService.guardar(
-                new TurnoDTO(null, paciente.getId(), odontologo1.getId(), LocalDate.of(2025, 10, 10))
-        );
-        TurnoDTO turno2 = turnoService.guardar(
-                new TurnoDTO(null, paciente.getId(), odontologo2.getId(), LocalDate.of(2025, 10, 20))
-        );
-
-        Assertions.assertNotNull(turno1.getId());
-        Assertions.assertNotNull(turno2.getId());
-        Assertions.assertNotEquals(turno1.getId(), turno2.getId());
-        Assertions.assertEquals(paciente.getId(), turno1.getPacienteId());
-        Assertions.assertEquals(paciente.getId(), turno2.getPacienteId());
     }
 }
 
