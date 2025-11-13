@@ -8,6 +8,16 @@ function formatearFechaArgentina(fechaISO) {
     return `${dia}-${mes}-${anio}`;
 }
 
+function convertirFechaAISO(fechaArgentina) {
+    if (!fechaArgentina) return '';
+    const partes = fechaArgentina.split('-');
+    if (partes.length !== 3) return fechaArgentina; 
+    const dia = partes[0];
+    const mes = partes[1];
+    const anio = partes[2];
+    return `${anio}-${mes}-${dia}`;
+}
+
 function findBy(id) {
   const url = '/api/pacientes/' + id;
 
@@ -23,9 +33,12 @@ function findBy(id) {
       document.getElementById('apellido').value = data.apellido || '';
       document.getElementById('numeroContacto').value = data.numeroContacto || '';
       
-      // Formatear fecha de ingreso a formato argentino
+      // Formatear fecha de ingreso a formato argentino para mostrar
       const fechaFormateada = formatearFechaArgentina(data.fechaIngreso);
       document.getElementById('fechaIngreso').value = fechaFormateada;
+      
+      // Guardar la fecha ISO original en un atributo data para usarla al actualizar
+      document.getElementById('fechaIngreso').setAttribute('data-fecha-iso', data.fechaIngreso);
       
       document.getElementById('email').value = data.email || '';
       
@@ -56,11 +69,14 @@ function findBy(id) {
 function updatePaciente() {
   const id = document.getElementById('paciente_id').value;
   
+  // Obtener la fecha ISO original (que no debe cambiar)
+  const fechaISO = document.getElementById('fechaIngreso').getAttribute('data-fecha-iso');
+  
   const payload = {
     nombre: document.getElementById('nombre').value,
     apellido: document.getElementById('apellido').value,
     numeroContacto: document.getElementById('numeroContacto').value,
-    fechaIngreso: document.getElementById('fechaIngreso').value,
+    fechaIngreso: fechaISO, // Usar la fecha ISO original
     email: document.getElementById('email').value,
     domicilio: {
       calle: document.getElementById('calle').value,

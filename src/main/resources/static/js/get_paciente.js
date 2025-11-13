@@ -30,8 +30,7 @@ window.addEventListener('load', function () {
          for(paciente of data){
             console.log('Procesando paciente:', paciente);
             //por cada paciente armaremos una fila de la tabla
-            var table = document.getElementById("pacienteTable");
-            var pacienteRow =table.insertRow();
+            var pacienteRow = tbody.insertRow();
             let tr_id = 'tr_' + paciente.id;
             pacienteRow.id = tr_id;
 

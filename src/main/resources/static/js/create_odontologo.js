@@ -31,8 +31,8 @@ window.addEventListener('load', function () {
         }
 
         // agregar fila a la tabla
-        const table = document.getElementById('odontologoTable');
-        const row = table.insertRow();
+        const tbody = document.getElementById('odontologoTableBody');
+        const row = tbody.insertRow();
         row.id = 'tr_od_' + created.id;
 
         const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +

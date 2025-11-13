@@ -38,8 +38,7 @@ function cargarTurnos() {
             for(turno of data) {
                 console.log('Procesando turno:', turno);
                 
-                var table = document.getElementById("turnoTable");
-                var turnoRow = table.insertRow();
+                var turnoRow = tbody.insertRow();
                 let tr_id = 'tr_turno_' + turno.id;
                 turnoRow.id = tr_id;
 
@@ -83,25 +82,40 @@ function findTurnoBy(id) {
             return response.json();
         })
         .then(turno => {
+            console.log('Turno recibido:', turno);
+            
+            // Limpiar todos los campos primero
+            document.getElementById('turno_id').value = '';
+            document.getElementById('turno_paciente').value = '';
+            document.getElementById('turno_odontologo').value = '';
+            document.getElementById('turno_fecha').value = '';
+            document.getElementById('turno_paciente_email').value = '';
+            document.getElementById('turno_paciente_telefono').value = '';
+            document.getElementById('turno_odontologo_matricula').value = '';
+            
             // Llenar el modal con los datos del turno
-            document.getElementById('turno_id').value = turno.id;
-            document.getElementById('turno_paciente').value = turno.paciente ? 
-                `${turno.paciente.nombre} ${turno.paciente.apellido}` : '';
-            document.getElementById('turno_odontologo').value = turno.odontologo ? 
-                `Dr/a. ${turno.odontologo.nombre} ${turno.odontologo.apellido}` : '';
+            document.getElementById('turno_id').value = turno.id || '';
             
             // Formatear fecha para mostrar
-            const fechaFormateada = formatearFecha(turno.fecha);
-            document.getElementById('turno_fecha').value = fechaFormateada;
+            if (turno.fecha) {
+                const fechaFormateada = formatearFecha(turno.fecha);
+                document.getElementById('turno_fecha').value = fechaFormateada;
+            }
             
-            // Si hay datos adicionales del paciente
+            // Datos del paciente
             if (turno.paciente) {
+                console.log('Datos del paciente:', turno.paciente);
+                document.getElementById('turno_paciente').value = 
+                    `${turno.paciente.nombre || ''} ${turno.paciente.apellido || ''}`.trim();
                 document.getElementById('turno_paciente_email').value = turno.paciente.email || '';
                 document.getElementById('turno_paciente_telefono').value = turno.paciente.numeroContacto || '';
             }
             
-            // Si hay datos adicionales del odontólogo
+            // Datos del odontólogo
             if (turno.odontologo) {
+                console.log('Datos del odontólogo:', turno.odontologo);
+                document.getElementById('turno_odontologo').value = 
+                    `Dr/a. ${turno.odontologo.nombre || ''} ${turno.odontologo.apellido || ''}`.trim();
                 document.getElementById('turno_odontologo_matricula').value = turno.odontologo.matricula || '';
             }
 
@@ -110,8 +124,8 @@ function findTurnoBy(id) {
             modal.show();
         })
         .catch(err => {
-            console.error(err);
-            alert('No se pudo cargar el turno');
+            console.error('Error al cargar el turno:', err);
+            alert('No se pudo cargar el turno: ' + err.message);
         });
 }
 

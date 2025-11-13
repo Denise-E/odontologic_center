@@ -27,8 +27,7 @@ window.addEventListener('load', function () {
          tbody.innerHTML = '';
 
          for(od of data){
-            var table = document.getElementById("odontologoTable");
-            var row = table.insertRow();
+            var row = tbody.insertRow();
             let tr_id = 'tr_od_' + od.id;
             row.id = tr_id;
 

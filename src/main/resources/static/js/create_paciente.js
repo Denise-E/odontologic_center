@@ -49,8 +49,8 @@ window.addEventListener('load', function () {
         }
 
         // agregar fila a la tabla
-        const table = document.getElementById('pacienteTable');
-        const row = table.insertRow();
+        const tbody = document.getElementById('pacienteTableBody');
+        const row = tbody.insertRow();
         row.id = 'tr_' + created.id;
 
         // Botón de eliminar con ícono de tacho
