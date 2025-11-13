@@ -3,11 +3,19 @@ window.addEventListener('load', function () {
     cargarPacientes();
     cargarOdontologos();
     
-    // Establecer fecha mínima como hoy
+    // Establecer fecha y hora mínima como ahora
     const fechaInput = document.getElementById('fecha');
-    const hoy = new Date().toISOString().split('T')[0];
-    fechaInput.setAttribute('min', hoy);
-    fechaInput.value = hoy;
+    const ahora = new Date();
+    // Formatear a datetime-local (YYYY-MM-DDTHH:MM)
+    const year = ahora.getFullYear();
+    const month = String(ahora.getMonth() + 1).padStart(2, '0');
+    const day = String(ahora.getDate()).padStart(2, '0');
+    const hours = String(ahora.getHours()).padStart(2, '0');
+    const minutes = String(ahora.getMinutes()).padStart(2, '0');
+    const ahoraISO = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
+    fechaInput.setAttribute('min', ahoraISO);
+    fechaInput.value = ahoraISO;
 
     // Manejar el envío del formulario
     const formulario = document.getElementById('create_turno_form');
@@ -75,18 +83,23 @@ function cargarOdontologos() {
 function crearTurno() {
     const pacienteId = parseInt(document.getElementById('pacienteId').value);
     const odontologoId = parseInt(document.getElementById('odontologoId').value);
-    const fecha = document.getElementById('fecha').value;
+    const fechaHora = document.getElementById('fecha').value;
 
     // Validar que todos los campos estén completos
-    if (!pacienteId || !odontologoId || !fecha) {
+    if (!pacienteId || !odontologoId || !fechaHora) {
         mostrarError('Por favor complete todos los campos');
         return;
     }
 
+    // Convertir datetime-local a formato ISO para el backend
+    // El input datetime-local da formato: YYYY-MM-DDTHH:MM
+    // El backend espera: YYYY-MM-DDTHH:MM:SS
+    const fechaHoraISO = fechaHora + ':00'; // Agregar segundos
+
     const turnoDTO = {
         pacienteId: pacienteId,
         odontologoId: odontologoId,
-        fecha: fecha
+        fecha: fechaHoraISO
     };
 
     const url = '/api/turnos';
@@ -103,7 +116,16 @@ function crearTurno() {
             if (response.ok) {
                 return response.json();
             } else {
-                return response.json().then(err => Promise.reject(err));
+                return response.text().then(text => {
+                    // Intentar parsear como JSON
+                    try {
+                        const err = JSON.parse(text);
+                        return Promise.reject(err);
+                    } catch {
+                        // Si no es JSON, usar el texto directamente
+                        return Promise.reject({ message: text });
+                    }
+                });
             }
         })
         .then(data => {
@@ -113,7 +135,13 @@ function crearTurno() {
         })
         .catch(error => {
             console.error('Error al crear turno:', error);
-            const mensaje = error.message || 'No se pudo crear el turno. Verifique que el paciente y odontólogo existan.';
+            let mensaje = error.message || 'No se pudo crear el turno. Verifique que el paciente y odontólogo existan.';
+            
+            // Detectar mensajes específicos del backend
+            if (mensaje.includes('conflicto') || mensaje.includes('ocupado') || mensaje.includes('conflict')) {
+                mensaje = 'Día y horario ocupados.';
+            }
+            
             mostrarError(mensaje);
         });
 }
@@ -152,7 +180,16 @@ function mostrarError(mensaje) {
 function limpiarFormulario() {
     document.getElementById('pacienteId').value = '';
     document.getElementById('odontologoId').value = '';
-    const hoy = new Date().toISOString().split('T')[0];
-    document.getElementById('fecha').value = hoy;
+    
+    // Establecer fecha y hora actual
+    const ahora = new Date();
+    const year = ahora.getFullYear();
+    const month = String(ahora.getMonth() + 1).padStart(2, '0');
+    const day = String(ahora.getDate()).padStart(2, '0');
+    const hours = String(ahora.getHours()).padStart(2, '0');
+    const minutes = String(ahora.getMinutes()).padStart(2, '0');
+    const ahoraISO = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
+    document.getElementById('fecha').value = ahoraISO;
 }
 

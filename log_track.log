@@ -571,3 +571,23 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-11-12 22:36:59] [ INFO ] [TurnoController:52] Buscando todos los turnos
 [2025-11-12 22:37:01] [ INFO ] [TurnoController:38] Buscando turno por ID: 1
 [2025-11-12 22:37:01] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@1d9eacbf
+[2025-11-12 22:41:58] [ INFO ] [PacienteController:80] Creando paciente: up.edu.microservicios.entity.Paciente@2ab14d0c
+[2025-11-12 22:41:58] [ INFO ] [PacienteController:82] Paciente creado: up.edu.microservicios.entity.Paciente@2ab14d0c
+[2025-11-12 22:42:19] [ INFO ] [PacienteController:80] Creando paciente: up.edu.microservicios.entity.Paciente@2c152391
+[2025-11-12 22:42:19] [ INFO ] [PacienteController:82] Paciente creado: up.edu.microservicios.entity.Paciente@2c152391
+[2025-11-12 22:42:41] [ INFO ] [OdontologoController:60] Creando odontologo: up.edu.microservicios.entity.Odontologo@1034173f
+[2025-11-12 22:42:41] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@1034173f
+[2025-11-12 22:42:44] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-12 22:42:45] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-12 22:42:45] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-12 22:43:16] [ INFO ] [TurnoController:29] Creando turno: up.edu.microservicios.dto.TurnoDTO@12f22ecf
+[2025-11-12 22:43:16] [ INFO ] [TurnoController:31] Turno creado: up.edu.microservicios.dto.TurnoDTO@1aec5fb4
+[2025-11-12 22:43:28] [ INFO ] [TurnoController:29] Creando turno: up.edu.microservicios.dto.TurnoDTO@4f514059
+[2025-11-12 22:43:28] [ INFO ] [TurnoController:31] Turno creado: up.edu.microservicios.dto.TurnoDTO@7d251991
+[2025-11-12 22:43:33] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-12 22:43:39] [ INFO ] [TurnoController:38] Buscando turno por ID: 1
+[2025-11-12 22:43:39] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@72e4185e
+[2025-11-12 22:43:44] [ INFO ] [TurnoController:38] Buscando turno por ID: 2
+[2025-11-12 22:43:44] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@5c40ebd3
+[2025-11-12 22:43:50] [ INFO ] [TurnoController:100] Eliminando turno: 2
+[2025-11-12 22:45:45] [ INFO ] [TurnoController:52] Buscando todos los turnos

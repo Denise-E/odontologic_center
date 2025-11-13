@@ -1,11 +1,23 @@
-// Formateo de fecha a DD-MM-YYYY
+// Formateo de fecha y hora a DD-MM-YYYY HH:MM
 function formatearFecha(fechaISO) {
     if (!fechaISO) return '';
-    const fecha = new Date(fechaISO + 'T00:00:00'); 
+    
+    // Si la fecha ya incluye hora (tiene 'T'), parsearla directamente
+    // Si solo es fecha (YYYY-MM-DD), agregar hora por defecto
+    let fecha;
+    if (fechaISO.includes('T')) {
+        fecha = new Date(fechaISO);
+    } else {
+        fecha = new Date(fechaISO + 'T00:00:00');
+    }
+    
     const dia = String(fecha.getDate()).padStart(2, '0');
     const mes = String(fecha.getMonth() + 1).padStart(2, '0');
     const anio = fecha.getFullYear();
-    return `${dia}-${mes}-${anio}`;
+    const horas = String(fecha.getHours()).padStart(2, '0');
+    const minutos = String(fecha.getMinutes()).padStart(2, '0');
+    
+    return `${dia}-${mes}-${anio} ${horas}:${minutos}`;
 }
 
 window.addEventListener('load', function () {
@@ -90,28 +102,26 @@ function findTurnoBy(id) {
             document.getElementById('turno_odontologo').value = '';
             document.getElementById('turno_fecha').value = '';
             document.getElementById('turno_paciente_email').value = '';
-            document.getElementById('turno_paciente_telefono').value = '';
             document.getElementById('turno_odontologo_matricula').value = '';
             
             // Llenar el modal con los datos del turno
             document.getElementById('turno_id').value = turno.id || '';
             
-            // Formatear fecha para mostrar
+            // Formatear fecha y hora para mostrar
             if (turno.fecha) {
                 const fechaFormateada = formatearFecha(turno.fecha);
                 document.getElementById('turno_fecha').value = fechaFormateada;
             }
             
-            // Datos del paciente
+            // Datos del paciente (solo nombre y email)
             if (turno.paciente) {
                 console.log('Datos del paciente:', turno.paciente);
                 document.getElementById('turno_paciente').value = 
                     `${turno.paciente.nombre || ''} ${turno.paciente.apellido || ''}`.trim();
                 document.getElementById('turno_paciente_email').value = turno.paciente.email || '';
-                document.getElementById('turno_paciente_telefono').value = turno.paciente.numeroContacto || '';
             }
             
-            // Datos del odontólogo
+            // Datos del odontólogo (solo nombre y matrícula)
             if (turno.odontologo) {
                 console.log('Datos del odontólogo:', turno.odontologo);
                 document.getElementById('turno_odontologo').value = 

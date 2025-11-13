@@ -13,6 +13,7 @@ import up.edu.microservicios.repository.TurnoRepository;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,13 +30,13 @@ public class TurnoService {
     @Autowired
     private OdontologoService odontologoService;
 
-    private void validarFecha(LocalDate fecha) {
+    private void validarFecha(LocalDateTime fecha) {
         if (fecha == null) {
             throw new InvalidDateException("La fecha del turno no puede ser nula");
         }
         
-        // Validar que no sea una fecha pasada
-        if (fecha.isBefore(LocalDate.now())) {
+        // Validar que no sea una fecha/hora pasada
+        if (fecha.isBefore(LocalDateTime.now())) {
             throw new InvalidDateException("No se pueden crear turnos en fechas pasadas");
         }
         
@@ -46,19 +47,19 @@ public class TurnoService {
     }
     
     /**
-     * Valida que no haya conflictos de turnos
+     * Valida que no haya conflictos de turnos (mismo día y hora)
      */
-    private void validarConflictos(Integer pacienteId, Integer odontologoId, LocalDate fecha, Integer turnoIdExcluir) {
-        // Validar que el odontólogo no tenga otro turno en la misma fecha
+    private void validarConflictos(Integer pacienteId, Integer odontologoId, LocalDateTime fecha, Integer turnoIdExcluir) {
+        // Validar que el odontólogo no tenga otro turno en la misma fecha y hora
         Optional<Turno> turnoOdontologo = turnoRepository.findByOdontologoIdAndFecha(odontologoId, fecha);
         if (turnoOdontologo.isPresent() && !turnoOdontologo.get().getId().equals(turnoIdExcluir)) {
-            throw new AppointmentConflictException("El odontólogo ya tiene un turno asignado en la fecha " + fecha);
+            throw new AppointmentConflictException("Día y horario ocupados.");
         }
         
-        // Validar que el paciente no tenga otro turno en la misma fecha
+        // Validar que el paciente no tenga otro turno en la misma fecha y hora
         Optional<Turno> turnoPaciente = turnoRepository.findByPacienteIdAndFecha(pacienteId, fecha);
         if (turnoPaciente.isPresent() && !turnoPaciente.get().getId().equals(turnoIdExcluir)) {
-            throw new AppointmentConflictException("El paciente ya tiene un turno asignado en la fecha " + fecha);
+            throw new AppointmentConflictException("El paciente ya tiene un turno asignado en la fecha y hora " + fecha);
         }
     }
 
@@ -159,13 +160,15 @@ public class TurnoService {
                 .collect(Collectors.toList());
     }
 
-    // Convertir Entidad a DTO
+    // Convertir Entidad a DTO (incluye objetos completos para el frontend)
     private TurnoDTO entidadADto(Turno turno) {
         TurnoDTO dto = new TurnoDTO();
         dto.setId(turno.getId());
         dto.setPacienteId(turno.getPaciente().getId());
         dto.setOdontologoId(turno.getOdontologo().getId());
         dto.setFecha(turno.getFecha());
+        dto.setPaciente(turno.getPaciente());
+        dto.setOdontologo(turno.getOdontologo());
         return dto;
     }
 
