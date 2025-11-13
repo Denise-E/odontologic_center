@@ -18,6 +18,17 @@
         <div class="row mb-4 justify-content-center">
             <div class="col-sm-6" style="background-color:#f8f9fa; padding:10px; border-radius:3px">
                 <h5>Crear Odontólogo</h5>
+                
+                <div id="alert-success-odontologo" class="alert alert-success alert-dismissible fade show" style="display: none;" role="alert">
+                    <strong>¡Éxito!</strong> Odontólogo creado correctamente.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div id="alert-error-odontologo" class="alert alert-danger alert-dismissible fade show" style="display: none;" role="alert">
+                    <strong>Error:</strong> <span id="error-message-odontologo"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
                 <form id="create_odontologo_form">
                     <div class="form-group">
                         <label>Nombre:</label>

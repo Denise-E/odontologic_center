@@ -19,6 +19,17 @@
         <div class="row mb-4 justify-content-center">
             <div class="col-sm-6" style="background-color:#f8f9fa; padding:10px; border-radius:3px">
                 <h5>Crear Paciente</h5>
+                
+                <div id="alert-success-paciente" class="alert alert-success alert-dismissible fade show" style="display: none;" role="alert">
+                    <strong>¡Éxito!</strong> Paciente creado correctamente.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div id="alert-error-paciente" class="alert alert-danger alert-dismissible fade show" style="display: none;" role="alert">
+                    <strong>Error:</strong> <span id="error-message-paciente"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
                 <form id="create_paciente_form">
                     <div class="form-group">
                         <label>Nombre:</label>
@@ -30,7 +41,7 @@
                     </div>
                     <div class="form-group">
                         <label>Número de contacto:</label>
-                        <input type="text" class="form-control" id="c_numeroContacto" placeholder="Número de contacto" required>
+                        <input type="tel" class="form-control" id="c_numeroContacto" placeholder="Ej: 5411123456789" pattern="[0-9]+" title="Solo números" required>
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
@@ -115,7 +126,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label"><strong>Número de contacto:</strong></label>
-                                    <input type="text" class="form-control" placeholder="Número de contacto" id="numeroContacto" required>
+                                    <input type="tel" class="form-control" placeholder="Ej: 5411123456789" id="numeroContacto" pattern="[0-9]+" title="Solo números" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label"><strong>Fecha ingreso:</strong></label>

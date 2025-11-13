@@ -644,3 +644,60 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-11-13 13:27:18] [ INFO ] [OdontologoController:44] Buscando todos odontologos
 [2025-11-13 13:27:18] [ INFO ] [PacienteController:44] Buscando todos pacientes
 [2025-11-13 13:27:18] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 13:35:26] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 13:35:26] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:35:26] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:35:28] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:36:30] [ INFO ] [PacienteController:80] Creando paciente: up.edu.microservicios.entity.Paciente@7e9915c6
+[2025-11-13 13:36:30] [ INFO ] [PacienteController:82] Paciente creado: up.edu.microservicios.entity.Paciente@7e9915c6
+[2025-11-13 13:36:33] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 13:36:33] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@400057b1]
+[2025-11-13 13:36:39] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:36:41] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:36:43] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:36:52] [ INFO ] [OdontologoController:60] Creando odontologo: up.edu.microservicios.entity.Odontologo@292cf7c7
+[2025-11-13 13:36:52] [ INFO ] [OdontologoController:62] Odontologo creado: up.edu.microservicios.entity.Odontologo@292cf7c7
+[2025-11-13 13:36:54] [ INFO ] [OdontologoController:31] Buscando odontologo por ID: 1
+[2025-11-13 13:36:54] [ INFO ] [OdontologoController:34] Odontologo encontrado: Optional[up.edu.microservicios.entity.Odontologo@5e3a3cd6]
+[2025-11-13 13:37:01] [ INFO ] [OdontologoController:86] Actualizando odontologo con ID: 1
+[2025-11-13 13:37:01] [ INFO ] [OdontologoController:108] Odontologo actualizado: up.edu.microservicios.entity.Odontologo@4375bf20
+[2025-11-13 13:37:03] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:37:05] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 13:37:05] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@44133193]
+[2025-11-13 13:37:13] [ INFO ] [PacienteController:106] Actualizando paciente con ID: 1
+[2025-11-13 13:37:13] [ INFO ] [PacienteController:146] Paciente actualizado: up.edu.microservicios.entity.Paciente@3307ee00
+[2025-11-13 13:37:15] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 13:37:15] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@245fd17d]
+[2025-11-13 13:37:19] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:37:22] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:37:25] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:37:28] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:37:28] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:37:28] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 13:37:29] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:37:29] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:37:37] [ INFO ] [TurnoController:29] Creando turno: up.edu.microservicios.dto.TurnoDTO@62ce3fef
+[2025-11-13 13:37:37] [ INFO ] [TurnoController:31] Turno creado: up.edu.microservicios.dto.TurnoDTO@704cc4c7
+[2025-11-13 13:37:48] [ INFO ] [TurnoController:29] Creando turno: up.edu.microservicios.dto.TurnoDTO@64ed29f8
+[2025-11-13 13:37:57] [ INFO ] [TurnoController:29] Creando turno: up.edu.microservicios.dto.TurnoDTO@1bfea9aa
+[2025-11-13 13:37:57] [ INFO ] [TurnoController:31] Turno creado: up.edu.microservicios.dto.TurnoDTO@34e0cc17
+[2025-11-13 13:38:01] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 13:38:01] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:38:01] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:38:02] [ INFO ] [TurnoController:38] Buscando turno por ID: 2
+[2025-11-13 13:38:02] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@7c779e1b
+[2025-11-13 13:38:08] [ INFO ] [TurnoController:86] Actualizando turno con ID: 2
+[2025-11-13 13:38:08] [ INFO ] [TurnoController:93] Turno actualizado: up.edu.microservicios.dto.TurnoDTO@28308a6
+[2025-11-13 13:38:08] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 13:38:11] [ INFO ] [TurnoController:38] Buscando turno por ID: 2
+[2025-11-13 13:38:11] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@54dbc5a6
+[2025-11-13 13:38:15] [ INFO ] [TurnoController:100] Eliminando turno: 2
+[2025-11-13 13:38:17] [ INFO ] [TurnoController:38] Buscando turno por ID: 1
+[2025-11-13 13:38:17] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@3e4690f3
+[2025-11-13 13:38:20] [ INFO ] [OdontologoController:44] Buscando todos odontologos
+[2025-11-13 13:46:59] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:47:21] [ INFO ] [PacienteController:44] Buscando todos pacientes
+[2025-11-13 13:47:33] [ INFO ] [PacienteController:80] Creando paciente: up.edu.microservicios.entity.Paciente@6984b8cf
+[2025-11-13 13:47:33] [ INFO ] [PacienteController:82] Paciente creado: up.edu.microservicios.entity.Paciente@6984b8cf
+[2025-11-13 13:47:39] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 13:47:39] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@79dafdf]

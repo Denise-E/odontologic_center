@@ -55,6 +55,19 @@ function findBy(id) {
         document.getElementById('provincia').value = '';
       }
 
+      // Agregar validación en tiempo real para el campo de teléfono en el modal
+      const numeroContactoModal = document.getElementById('numeroContacto');
+      if (numeroContactoModal) {
+        // Remover listeners previos para evitar duplicados
+        const newInput = numeroContactoModal.cloneNode(true);
+        numeroContactoModal.parentNode.replaceChild(newInput, numeroContactoModal);
+        
+        newInput.addEventListener('input', function (e) {
+          // Solo permitir números (0-9)
+          this.value = this.value.replace(/[^0-9]/g, '');
+        });
+      }
+
       // Abrir el modal de Bootstrap 5
       const modal = new bootstrap.Modal(document.getElementById('pacienteModal'));
       modal.show();

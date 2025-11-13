@@ -18,10 +18,18 @@ window.addEventListener('load', function () {
       body: JSON.stringify(payload)
     })
       .then(response => {
-        if (!response.ok) throw new Error('Error al crear odontólogo');
+        if (!response.ok) {
+          // Intentar leer el mensaje de error del servidor
+          return response.text().then(text => {
+            throw new Error(text || 'Error al crear odontólogo');
+          });
+        }
         return response.json();
       })
       .then(created => {
+        // Ocultar alerta de error si estaba visible
+        document.getElementById('alert-error-odontologo').style.display = 'none';
+        
         // Si es el primer odontólogo, ocultar mensaje y mostrar tabla
         const noOdontologosMsg = document.getElementById('noOdontologosMessage');
         const tableContainer = document.getElementById('odontologosTableContainer');
@@ -50,11 +58,37 @@ window.addEventListener('load', function () {
           '<td class="td_od_requisitos">' + (created.requisitosTurnos || '') + '</td>' +
           '<td>' + viewButton + ' ' + deleteButton + '</td>';
 
+        const alertSuccess = document.getElementById('alert-success-odontologo');
+        alertSuccess.style.display = 'block';
+        
+        // Ocultar después de 3 segundos
+        setTimeout(() => {
+          alertSuccess.style.display = 'none';
+        }, 3000);
+
         form.reset();
         console.log('Odontólogo creado exitosamente:', created);
       })
       .catch(err => {
         console.error('Error al crear odontólogo:', err);
+        
+        // Mostrar error en la UI
+        const alertError = document.getElementById('alert-error-odontologo');
+        const errorMessage = document.getElementById('error-message-odontologo');
+        
+        // Extraer el mensaje de error limpio
+        let mensaje = err.message || 'Error desconocido al crear odontólogo';
+        
+        // Limpiar el mensaje si viene con "Error: " al principio
+        if (mensaje.startsWith('Error: ')) {
+          mensaje = mensaje.substring(7);
+        }
+        
+        errorMessage.textContent = mensaje;
+        alertError.style.display = 'block';
+        
+        // Hacer scroll al error
+        alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
   });
 });
