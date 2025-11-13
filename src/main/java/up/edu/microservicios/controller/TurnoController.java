@@ -51,10 +51,8 @@ public class TurnoController {
     public ResponseEntity<List<TurnoDTO>> buscarTodos() {
         LOGGER.info("Buscando todos los turnos");
         List<TurnoDTO> turnos = turnoService.buscarTodos();
-
-        if (turnos.isEmpty()) {
-            throw new ResourceNotFoundException("No hay turnos registrados por el momento");
-        }
+        
+        LOGGER.info("Turnos encontrados: " + turnos.size());
         return ResponseEntity.ok(turnos);
     }
 

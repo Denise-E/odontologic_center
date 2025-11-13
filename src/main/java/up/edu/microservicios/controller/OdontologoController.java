@@ -54,7 +54,7 @@ public class OdontologoController {
         // Validar matrícula única
         Optional<Odontologo> odontologoPorMatricula = odontologoService.buscarPorMatricula(odontologo.getMatricula());
         if(odontologoPorMatricula.isPresent()){
-            throw new DuplicateResourceException("La matrícula " + odontologo.getMatricula() + " ya está registrada");
+            throw new DuplicateResourceException("Matricula ya registrada");
         }
 
         LOGGER.info("Creando odontologo: " + odontologo);
