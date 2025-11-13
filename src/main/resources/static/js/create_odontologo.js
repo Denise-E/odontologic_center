@@ -35,12 +35,12 @@ window.addEventListener('load', function () {
         const row = tbody.insertRow();
         row.id = 'tr_od_' + created.id;
 
-        const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
-          '🗑️' +
+        const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Ver/editar odontólogo">' +
+          '👁️' +
           '</button>';
 
-        const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
-          '👁️' +
+        const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar odontólogo">' +
+          '🗑️' +
           '</button>';
 
         row.innerHTML = '<td>' + created.id + '</td>' +

@@ -53,14 +53,12 @@ window.addEventListener('load', function () {
         const row = tbody.insertRow();
         row.id = 'tr_' + created.id;
 
-        // Botón de eliminar con ícono de tacho
-        const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
-          '🗑️' +
+        const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Ver/editar paciente">' +
+          '👁️' +
           '</button>';
 
-        // Botón de ver/editar con ícono de ojo
-        const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
-          '👁️' +
+        const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar paciente">' +
+          '🗑️' +
           '</button>';
 
         row.innerHTML = '<td>' + created.id + '</td>' +
