@@ -35,11 +35,11 @@ window.addEventListener('load', function () {
         const row = table.insertRow();
         row.id = 'tr_od_' + created.id;
 
-        const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem;">' +
+        const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
           '🗑️' +
           '</button>';
 
-        const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem;">' +
+        const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
           '👁️' +
           '</button>';
 

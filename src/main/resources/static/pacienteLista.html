@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Lista de Pacientes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -61,11 +60,11 @@
         
         <h2 class="text-center mt-4 mb-3">Listado de Pacientes</h2>
         
-        <div id="noPacientesMessage" class="alert alert-info text-center" style="display: none;">
+        <div id="noPacientesMessage" class="alert alert-info text-center">
             <h5>Todavía no hay pacientes registrados</h5>
         </div>
         
-        <div id="pacientesTableContainer" class="row justify-content-center">
+        <div id="pacientesTableContainer" class="row justify-content-center" style="display: none;">
             <div class="col-lg-10 table-responsive">
                 <table id="pacienteTable" class="table table-bordered">
                     <thead class="table-light">

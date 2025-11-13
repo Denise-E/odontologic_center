@@ -54,12 +54,12 @@ window.addEventListener('load', function () {
         row.id = 'tr_' + created.id;
 
         // Botón de eliminar con ícono de tacho
-        const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem;">' +
+        const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
           '🗑️' +
           '</button>';
 
         // Botón de ver/editar con ícono de ojo
-        const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem;">' +
+        const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
           '👁️' +
           '</button>';
 

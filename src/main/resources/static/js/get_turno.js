@@ -43,18 +43,21 @@ function cargarTurnos() {
                 let tr_id = 'tr_turno_' + turno.id;
                 turnoRow.id = tr_id;
 
-¿                let deleteButton = '<button' +
+                // Botón de eliminar con ícono de tacho
+                let deleteButton = '<button' +
                                       ' id=' + '\"' + 'btn_delete_turno_' + turno.id + '\"' +
-                                      ' type="button" onclick="deleteTurnoBy('+turno.id+')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem; text-decoration: none;">' +
+                                      ' type="button" onclick="deleteTurnoBy('+turno.id+')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
                                       '🗑️' +
                                       '</button>';
 
+                // Botón de ver con ícono de ojo
                 let viewButton = '<button' +
                                       ' id=' + '\"' + 'btn_view_turno_' + turno.id + '\"' +
-                                      ' type="button" onclick="findTurnoBy('+turno.id+')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem; text-decoration: none;">' +
+                                      ' type="button" onclick="findTurnoBy('+turno.id+')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
                                       '👁️' +
                                       '</button>';
 
+                // Formatear la fecha en formato argentino
                 const fechaFormateada = formatearFecha(turno.fecha);
 
                 turnoRow.innerHTML = '<td>' + turno.id + '</td>' +
