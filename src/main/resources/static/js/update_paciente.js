@@ -1,3 +1,13 @@
+// Función para formatear fecha a DD-MM-YYYY
+function formatearFechaArgentina(fechaISO) {
+    if (!fechaISO) return '';
+    const fecha = new Date(fechaISO + 'T00:00:00'); // Asegurar que sea interpretada como local
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const anio = fecha.getFullYear();
+    return `${dia}-${mes}-${anio}`;
+}
+
 function findBy(id) {
   const url = '/api/pacientes/' + id;
 
@@ -12,7 +22,11 @@ function findBy(id) {
       document.getElementById('nombre').value = data.nombre || '';
       document.getElementById('apellido').value = data.apellido || '';
       document.getElementById('numeroContacto').value = data.numeroContacto || '';
-      document.getElementById('fechaIngreso').value = data.fechaIngreso || '';
+      
+      // Formatear fecha de ingreso a formato argentino
+      const fechaFormateada = formatearFechaArgentina(data.fechaIngreso);
+      document.getElementById('fechaIngreso').value = fechaFormateada;
+      
       document.getElementById('email').value = data.email || '';
       
       // Cargar datos del domicilio si existen
