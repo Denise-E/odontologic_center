@@ -54,18 +54,18 @@ function cargarTurnos() {
                 let tr_id = 'tr_turno_' + turno.id;
                 turnoRow.id = tr_id;
 
+                // Botón de ver/editar con ícono de lápiz
+                let editButton = '<button' +
+                                      ' id=' + '\"' + 'btn_edit_turno_' + turno.id + '\"' +
+                                      ' type="button" onclick="findTurnoBy('+turno.id+')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Editar turno">' +
+                                      '👁️' +
+                                      '</button>';
+
                 // Botón de eliminar con ícono de tacho
                 let deleteButton = '<button' +
                                       ' id=' + '\"' + 'btn_delete_turno_' + turno.id + '\"' +
-                                      ' type="button" onclick="deleteTurnoBy('+turno.id+')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
+                                      ' type="button" onclick="deleteTurnoBy('+turno.id+')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar turno">' +
                                       '🗑️' +
-                                      '</button>';
-
-                // Botón de ver con ícono de ojo
-                let viewButton = '<button' +
-                                      ' id=' + '\"' + 'btn_view_turno_' + turno.id + '\"' +
-                                      ' type="button" onclick="findTurnoBy('+turno.id+')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;">' +
-                                      '👁️' +
                                       '</button>';
 
                 // Formatear la fecha en formato argentino
@@ -75,7 +75,7 @@ function cargarTurnos() {
                         '<td class=\"td_turno_paciente\">' + (turno.paciente?.nombre || '') + ' ' + (turno.paciente?.apellido || '') + '</td>' +
                         '<td class=\"td_turno_odontologo\">' + 'Dr/a. ' + (turno.odontologo?.nombre || '') + ' ' + (turno.odontologo?.apellido || '') + '</td>' +
                         '<td class=\"td_turno_fecha\">' + fechaFormateada + '</td>' +
-                        '<td>' + viewButton + ' ' + deleteButton + '</td>';
+                        '<td>' + editButton + ' ' + deleteButton + '</td>';
             };
         })
         .catch(error => {
@@ -96,37 +96,24 @@ function findTurnoBy(id) {
         .then(turno => {
             console.log('Turno recibido:', turno);
             
-            // Limpiar todos los campos primero
-            document.getElementById('turno_id').value = '';
-            document.getElementById('turno_paciente').value = '';
-            document.getElementById('turno_odontologo').value = '';
-            document.getElementById('turno_fecha').value = '';
-            document.getElementById('turno_paciente_email').value = '';
-            document.getElementById('turno_odontologo_matricula').value = '';
+            // Ocultar mensaje de error si existe
+            const errorDiv = document.getElementById('errorTurnoUpdate');
+            if (errorDiv) {
+                errorDiv.classList.add('d-none');
+            }
             
-            // Llenar el modal con los datos del turno
+            // Llenar el ID del turno
             document.getElementById('turno_id').value = turno.id || '';
             
-            // Formatear fecha y hora para mostrar
+            // Llenar selectores de pacientes y odontólogos
+            llenarSelectorPacientes(turno.paciente ? turno.paciente.id : null);
+            llenarSelectorOdontologos(turno.odontologo ? turno.odontologo.id : null);
+            
+            // Convertir y llenar fecha
             if (turno.fecha) {
-                const fechaFormateada = formatearFecha(turno.fecha);
-                document.getElementById('turno_fecha').value = fechaFormateada;
-            }
-            
-            // Datos del paciente (solo nombre y email)
-            if (turno.paciente) {
-                console.log('Datos del paciente:', turno.paciente);
-                document.getElementById('turno_paciente').value = 
-                    `${turno.paciente.nombre || ''} ${turno.paciente.apellido || ''}`.trim();
-                document.getElementById('turno_paciente_email').value = turno.paciente.email || '';
-            }
-            
-            // Datos del odontólogo (solo nombre y matrícula)
-            if (turno.odontologo) {
-                console.log('Datos del odontólogo:', turno.odontologo);
-                document.getElementById('turno_odontologo').value = 
-                    `Dr/a. ${turno.odontologo.nombre || ''} ${turno.odontologo.apellido || ''}`.trim();
-                document.getElementById('turno_odontologo_matricula').value = turno.odontologo.matricula || '';
+                // Convertir fecha ISO a formato datetime-local (YYYY-MM-DDTHH:MM)
+                const fechaLocal = convertirFechaISOALocal(turno.fecha);
+                document.getElementById('turno_fecha').value = fechaLocal;
             }
 
             // Abrir el modal
