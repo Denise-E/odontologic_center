@@ -27,44 +27,54 @@ window.addEventListener('load', function () {
         return response.json();
       })
       .then(created => {
-        // Ocultar alerta de error si estaba visible
-        document.getElementById('alert-error-odontologo').style.display = 'none';
+        const alertError = document.getElementById('alert-error-odontologo');
+        if (alertError) {
+          alertError.style.display = 'none';
+        }
         
         // Si es el primer odontólogo, ocultar mensaje y mostrar tabla
         const noOdontologosMsg = document.getElementById('noOdontologosMessage');
         const tableContainer = document.getElementById('odontologosTableContainer');
-        if (noOdontologosMsg.style.display !== 'none') {
+        if (noOdontologosMsg && noOdontologosMsg.style.display !== 'none') {
           noOdontologosMsg.style.display = 'none';
-          tableContainer.style.display = 'flex';
+          if (tableContainer) {
+            tableContainer.style.display = 'flex';
+          }
         }
 
         // agregar fila a la tabla
         const tbody = document.getElementById('odontologoTableBody');
-        const row = tbody.insertRow();
-        row.id = 'tr_od_' + created.id;
+        if (tbody) {
+          const row = tbody.insertRow();
+          row.id = 'tr_od_' + created.id;
 
-        const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Ver/editar odontólogo">' +
-          '👁️' +
-          '</button>';
+          const viewButton = '<button id="btn_view_od_' + created.id + '" type="button" onclick="findOdBy(' + created.id + ')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Ver/editar odontólogo">' +
+            '👁️' +
+            '</button>';
 
-        const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar odontólogo">' +
-          '🗑️' +
-          '</button>';
+          const deleteButton = '<button id="btn_delete_od_' + created.id + '" type="button" onclick="deleteOdBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar odontólogo">' +
+            '🗑️' +
+            '</button>';
 
-        row.innerHTML = '<td>' + created.id + '</td>' +
-          '<td class="td_od_nombre">' + (created.nombre || '').toUpperCase() + '</td>' +
-          '<td class="td_od_apellido">' + (created.apellido || '').toUpperCase() + '</td>' +
-          '<td class="td_od_matricula">' + (created.matricula || '') + '</td>' +
-          '<td class="td_od_requisitos">' + (created.requisitosTurnos || '') + '</td>' +
-          '<td>' + viewButton + ' ' + deleteButton + '</td>';
+          row.innerHTML = '<td>' + created.id + '</td>' +
+            '<td class="td_od_nombre">' + (created.nombre || '').toUpperCase() + '</td>' +
+            '<td class="td_od_apellido">' + (created.apellido || '').toUpperCase() + '</td>' +
+            '<td class="td_od_matricula">' + (created.matricula || '') + '</td>' +
+            '<td class="td_od_requisitos">' + (created.requisitosTurnos || '') + '</td>' +
+            '<td>' + viewButton + ' ' + deleteButton + '</td>';
+        }
 
         const alertSuccess = document.getElementById('alert-success-odontologo');
-        alertSuccess.style.display = 'block';
-        
-        // Ocultar después de 3 segundos
-        setTimeout(() => {
-          alertSuccess.style.display = 'none';
-        }, 3000);
+        if (alertSuccess) {
+          alertSuccess.style.display = 'block';
+          
+          // Ocultar después de 3 segundos
+          setTimeout(() => {
+            if (alertSuccess) {
+              alertSuccess.style.display = 'none';
+            }
+          }, 3000);
+        }
 
         form.reset();
         console.log('Odontólogo creado exitosamente:', created);
@@ -76,19 +86,24 @@ window.addEventListener('load', function () {
         const alertError = document.getElementById('alert-error-odontologo');
         const errorMessage = document.getElementById('error-message-odontologo');
         
-        // Extraer el mensaje de error limpio
-        let mensaje = err.message || 'Error desconocido al crear odontólogo';
-        
-        // Limpiar el mensaje si viene con "Error: " al principio
-        if (mensaje.startsWith('Error: ')) {
-          mensaje = mensaje.substring(7);
+        if (alertError && errorMessage) {
+          // Extraer el mensaje de error limpio
+          let mensaje = err.message || 'Error desconocido al crear odontólogo';
+          
+          // Limpiar el mensaje si viene con "Error: " al principio
+          if (mensaje.startsWith('Error: ')) {
+            mensaje = mensaje.substring(7);
+          }
+          
+          errorMessage.textContent = mensaje;
+          alertError.style.display = 'block';
+          
+          // Hacer scroll al error
+          alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // Fallback si no hay elementos de alerta
+          alert('Error al crear odontólogo: ' + (err.message || 'Error desconocido'));
         }
-        
-        errorMessage.textContent = mensaje;
-        alertError.style.display = 'block';
-        
-        // Hacer scroll al error
-        alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
   });
 });

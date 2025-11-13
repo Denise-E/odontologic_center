@@ -6,8 +6,3 @@ nos traiga info del domicilio si así lo queremos.
 // OneToOne es EAGER (ansioso) por defecto
 
 http://localhost:8080
-
-Micoservicios 2do Parcial:
-    1. 3 cruds c/ vistas
-    2. Unico DTO bien hecho
-

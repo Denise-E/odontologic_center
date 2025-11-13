@@ -49,42 +49,53 @@ window.addEventListener('load', function () {
         return response.json();
       })
       .then(created => {
-        document.getElementById('alert-error-paciente').style.display = 'none';
+        const alertError = document.getElementById('alert-error-paciente');
+        if (alertError) {
+          alertError.style.display = 'none';
+        }
         
         // Si es el primer paciente, ocultar mensaje y mostrar tabla
         const noPacientesMsg = document.getElementById('noPacientesMessage');
         const tableContainer = document.getElementById('pacientesTableContainer');
-        if (noPacientesMsg.style.display !== 'none') {
+        if (noPacientesMsg && noPacientesMsg.style.display !== 'none') {
           noPacientesMsg.style.display = 'none';
-          tableContainer.style.display = 'flex';
+          if (tableContainer) {
+            tableContainer.style.display = 'flex';
+          }
         }
 
         // agregar fila a la tabla
         const tbody = document.getElementById('pacienteTableBody');
-        const row = tbody.insertRow();
-        row.id = 'tr_' + created.id;
+        if (tbody) {
+          const row = tbody.insertRow();
+          row.id = 'tr_' + created.id;
 
-        const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Ver/editar paciente">' +
-          '👁️' +
-          '</button>';
+          const viewButton = '<button id="btn_view_' + created.id + '" type="button" onclick="findBy(' + created.id + ')" class="btn btn-link p-0 me-2" style="font-size: 1.2rem; text-decoration: none;" title="Ver/editar paciente">' +
+            '👁️' +
+            '</button>';
 
-        const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar paciente">' +
-          '🗑️' +
-          '</button>';
+          const deleteButton = '<button id="btn_delete_' + created.id + '" type="button" onclick="deleteBy(' + created.id + ')" class="btn btn-link p-0" style="font-size: 1.2rem; text-decoration: none;" title="Eliminar paciente">' +
+            '🗑️' +
+            '</button>';
 
-        row.innerHTML = '<td>' + created.id + '</td>' +
-          '<td class="td_nombre">' + (created.nombre || '').toUpperCase() + '</td>' +
-          '<td class="td_apellido">' + (created.apellido || '').toUpperCase() + '</td>' +
-          '<td class="td_email">' + (created.email || '') + '</td>' +
-          '<td>' + viewButton + ' ' + deleteButton + '</td>';
+          row.innerHTML = '<td>' + created.id + '</td>' +
+            '<td class="td_nombre">' + (created.nombre || '').toUpperCase() + '</td>' +
+            '<td class="td_apellido">' + (created.apellido || '').toUpperCase() + '</td>' +
+            '<td class="td_email">' + (created.email || '') + '</td>' +
+            '<td>' + viewButton + ' ' + deleteButton + '</td>';
+        }
 
         const alertSuccess = document.getElementById('alert-success-paciente');
-        alertSuccess.style.display = 'block';
-        
-        // Ocultar después de 3 segundos
-        setTimeout(() => {
-          alertSuccess.style.display = 'none';
-        }, 3000);
+        if (alertSuccess) {
+          alertSuccess.style.display = 'block';
+          
+          // Ocultar después de 3 segundos
+          setTimeout(() => {
+            if (alertSuccess) {
+              alertSuccess.style.display = 'none';
+            }
+          }, 3000);
+        }
 
         form.reset();
         console.log('Paciente creado exitosamente:', created);
@@ -96,19 +107,24 @@ window.addEventListener('load', function () {
         const alertError = document.getElementById('alert-error-paciente');
         const errorMessage = document.getElementById('error-message-paciente');
         
-        // Extraer el mensaje de error limpio
-        let mensaje = err.message || 'Error desconocido al crear paciente';
-        
-        // Limpiar el mensaje si viene con "Error: " al principio
-        if (mensaje.startsWith('Error: ')) {
-          mensaje = mensaje.substring(7);
+        if (alertError && errorMessage) {
+          // Extraer el mensaje de error limpio
+          let mensaje = err.message || 'Error desconocido al crear paciente';
+          
+          // Limpiar el mensaje si viene con "Error: " al principio
+          if (mensaje.startsWith('Error: ')) {
+            mensaje = mensaje.substring(7);
+          }
+          
+          errorMessage.textContent = mensaje;
+          alertError.style.display = 'block';
+          
+          // Hacer scroll al error
+          alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // Fallback si no hay elementos de alerta
+          alert('Error al crear paciente: ' + (err.message || 'Error desconocido'));
         }
-        
-        errorMessage.textContent = mensaje;
-        alertError.style.display = 'block';
-        
-        // Hacer scroll al error
-        alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
   });
 });
