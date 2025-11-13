@@ -13,7 +13,9 @@ function findOdBy(id) {
       document.getElementById('od_matricula').value = od.matricula || '';
       document.getElementById('od_requisitos').value = od.requisitosTurnos || '';
 
-      document.getElementById('div_odontologo_updating').style.display = 'block';
+      // Abrir el modal
+      const modal = new bootstrap.Modal(document.getElementById('odontologoModal'));
+      modal.show();
     })
     .catch(err => {
       console.error(err);
@@ -21,48 +23,48 @@ function findOdBy(id) {
     });
 }
 
-window.addEventListener('load', function () {
-  const form = document.getElementById('update_odontologo_form');
-  if (!form) return;
+function updateOdontologo() {
+  const id = document.getElementById('odontologo_id').value;
+  const payload = {
+    nombre: document.getElementById('od_nombre').value,
+    apellido: document.getElementById('od_apellido').value,
+    matricula: document.getElementById('od_matricula').value,
+    requisitosTurnos: document.getElementById('od_requisitos').value
+  };
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const id = document.getElementById('odontologo_id').value;
-    const payload = {
-      nombre: document.getElementById('od_nombre').value,
-      apellido: document.getElementById('od_apellido').value,
-      matricula: document.getElementById('od_matricula').value,
-      requisitosTurnos: document.getElementById('od_requisitos').value
-    };
-
-    fetch('/api/odontologos/' + id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
+  fetch('/api/odontologos/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Error al actualizar');
+      return response.json();
     })
-      .then(response => {
-        if (!response.ok) throw new Error('Error al actualizar');
-        return response.json();
-      })
-      .then(updated => {
-        const row = document.getElementById('tr_od_' + updated.id);
-        if (row) {
-          row.querySelector('.td_od_nombre').textContent = (updated.nombre || '').toUpperCase();
-          row.querySelector('.td_od_apellido').textContent = (updated.apellido || '').toUpperCase();
-          row.querySelector('.td_od_matricula').textContent = (updated.matricula || '');
-          row.querySelector('.td_od_requisitos').textContent = (updated.requisitosTurnos || '');
-        }
-        document.getElementById('div_odontologo_updating').style.display = 'none';
-        form.reset();
-      })
-      .catch(err => {
-        console.error(err);
-        alert('No se pudo actualizar el odontólogo');
-      });
-  });
-});
+    .then(updated => {
+      const row = document.getElementById('tr_od_' + updated.id);
+      if (row) {
+        row.querySelector('.td_od_nombre').textContent = (updated.nombre || '').toUpperCase();
+        row.querySelector('.td_od_apellido').textContent = (updated.apellido || '').toUpperCase();
+        row.querySelector('.td_od_matricula').textContent = (updated.matricula || '');
+        row.querySelector('.td_od_requisitos').textContent = (updated.requisitosTurnos || '');
+      }
+      
+      // Cerrar el modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('odontologoModal'));
+      modal.hide();
+      
+      // Resetear formulario
+      document.getElementById('update_odontologo_form').reset();
+      
+      alert('Odontólogo actualizado exitosamente');
+    })
+    .catch(err => {
+      console.error(err);
+      alert('No se pudo actualizar el odontólogo');
+    });
+}
 
 

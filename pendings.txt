@@ -1,17 +1,13 @@
 
-> Spring Security (¿Final? Clase 6/11)
-
+> Spring Security (¿Final? Clase 6/11) + tests de última clase
 
 // OneToMany y ManyToMany son LAZY por defecto -> Tenemos que especificar por ejemplo que al buscar un paciente 
 nos traiga info del domicilio si así lo queremos. 
-// OneToOne es EAGER (ansioso) por defecto 
-
+// OneToOne es EAGER (ansioso) por defecto
 
 http://localhost:8080
 
-
 Micoservicios 2do Parcial:
-
-1. 3 cruds c/ vistas
-2. Unico DTO bien hecho
+    1. 3 cruds c/ vistas
+    2. Unico DTO bien hecho
 

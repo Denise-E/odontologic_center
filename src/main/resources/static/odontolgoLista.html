@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odontologos Lista</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/get_odontologo.js"></script>
     <script type="text/javascript" src="js/update_odontologo.js"></script>
@@ -15,7 +16,7 @@
     <div id="app-header"></div>
     <div class="container">
         <h1>Lista de Odontologos</h1>
-        <div class="row mb-4">
+        <div class="row mb-4 justify-content-center">
             <div class="col-sm-6" style="background-color:#f8f9fa; padding:10px; border-radius:3px">
                 <h5>Crear Odontólogo</h5>
                 <form id="create_odontologo_form">
@@ -65,38 +66,56 @@
                 </table>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-sm-6" style="display: none; background-color:#e6fffa; padding:10px; border-radius:3px"
-                 id="div_odontologo_updating">
-                <form id="update_odontologo_form">
-                    <div class="form-group">
-                        <label>Id:</label>
-                        <input type="text" class="form-control" id="odontologo_id" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre:</label>
-                        <input type="text" class="form-control" id="od_nombre" placeholder="Nombre">
-                    </div>
-                    <div class="form-group">
-                        <label>Apellido:</label>
-                        <input type="text" class="form-control" id="od_apellido" placeholder="Apellido">
-                    </div>
-                    <div class="form-group">
-                        <label>Matrícula:</label>
-                        <input type="text" class="form-control" id="od_matricula" placeholder="Matrícula">
-                    </div>
-                    <div class="form-group">
-                        <label>Requisitos turnos:</label>
-                        <input type="text" class="form-control" id="od_requisitos" placeholder="Requisitos (opcional)">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Modificar</button>
-                </form>
-                <div id="od_response" style="display:none; margin:10px"></div>
+    </div>
+    
+    <!-- Modal para ver/editar odontólogo -->
+    <div class="modal fade" id="odontologoModal" tabindex="-1" aria-labelledby="odontologoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="odontologoModalLabel">Detalles del Odontólogo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="update_odontologo_form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Id:</strong></label>
+                                    <input type="text" class="form-control" id="odontologo_id" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Nombre:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Nombre" id="od_nombre" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Apellido:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Apellido" id="od_apellido" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Matrícula:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Matrícula" id="od_matricula" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label"><strong>Requisitos turnos:</strong></label>
+                                    <input type="text" class="form-control" placeholder="Requisitos (opcional)" id="od_requisitos">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="updateOdontologo()">Guardar Cambios</button>
+                </div>
             </div>
         </div>
     </div>
+    <hr>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -34,14 +34,14 @@ window.addEventListener('load', function () {
             // Botón de eliminar con ícono de tacho
             let deleteButton = '<button' +
                                       ' id=' + '\"' + 'btn_delete_' + paciente.id + '\"' +
-                                      ' type="button" onclick="deleteBy('+paciente.id+')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem;">' +
+                                      ' type="button" onclick="deleteBy('+paciente.id+')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem; text-decoration: none;">' +
                                       '🗑️' +
                                       '</button>';
 
             // Botón de ver/editar con ícono de ojo
             let viewButton = '<button' +
                                       ' id=' + '\"' + 'btn_view_' + paciente.id + '\"' +
-                                      ' type="button" onclick="findBy('+paciente.id+')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem;">' +
+                                      ' type="button" onclick="findBy('+paciente.id+')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem; text-decoration: none;">' +
                                       '👁️' +
                                       '</button>';
 

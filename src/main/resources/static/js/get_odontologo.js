@@ -30,13 +30,13 @@ window.addEventListener('load', function () {
 
             let deleteButton = '<button' +
                                       ' id=' + '\"' + 'btn_delete_od_' + od.id + '\"' +
-                                      ' type="button" onclick="deleteOdBy('+od.id+')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem;">' +
+                                      ' type="button" onclick="deleteOdBy('+od.id+')" class="btn btn-link text-danger p-0" style="font-size: 1.2rem; text-decoration: none;">' +
                                       '🗑️' +
                                       '</button>';
 
             let viewButton = '<button' +
                                       ' id=' + '\"' + 'btn_view_od_' + od.id + '\"' +
-                                      ' type="button" onclick="findOdBy('+od.id+')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem;">' +
+                                      ' type="button" onclick="findOdBy('+od.id+')" class="btn btn-link text-primary p-0" style="font-size: 1.2rem; text-decoration: none;">' +
                                       '👁️' +
                                       '</button>';
 
