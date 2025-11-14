@@ -849,3 +849,11 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-11-13 18:57:19] [ INFO ] [OdontologoController:44] Buscando todos odontologos
 [2025-11-13 18:57:19] [ INFO ] [PacienteController:44] Buscando todos pacientes
 [2025-11-13 18:57:19] [ INFO ] [TurnoController:55] Turnos encontrados: 2
+[2025-11-13 21:01:56] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 21:01:56] [ INFO ] [TurnoController:55] Turnos encontrados: 1
+[2025-11-13 21:19:38] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 21:19:38] [ INFO ] [TurnoController:55] Turnos encontrados: 1
+[2025-11-13 21:23:11] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 21:23:11] [ INFO ] [TurnoController:55] Turnos encontrados: 0
+[2025-11-13 21:32:51] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 21:32:51] [ INFO ] [TurnoController:55] Turnos encontrados: 1
