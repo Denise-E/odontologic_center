@@ -863,3 +863,26 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-11-13 21:40:30] [ INFO ] [TurnoController:73] Buscando turnos del odontólogo ID: 1
 [2025-11-13 21:40:30] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
 [2025-11-13 21:40:30] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@3eb4fdd5]
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:55] Turnos encontrados: 1
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:62] Buscando turnos del paciente ID: 1
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:73] Buscando turnos del odontólogo ID: 1
+[2025-11-13 22:00:00] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 22:00:00] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@7b9e7633]
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:38] Buscando turno por ID: 1
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@ae4a043
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:84] Actualizando turno con ID: 1
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:91] Turno actualizado: up.edu.microservicios.dto.TurnoDTO@1fcef7
+[2025-11-13 22:00:00] [ INFO ] [TurnoController:98] Eliminando turno: 1
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:55] Turnos encontrados: 1
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:62] Buscando turnos del paciente ID: 1
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:73] Buscando turnos del odontólogo ID: 1
+[2025-11-13 22:01:24] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 22:01:24] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@745c25ed]
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:38] Buscando turno por ID: 1
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:42] Turno encontrado: up.edu.microservicios.dto.TurnoDTO@298f7b0a
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:84] Actualizando turno con ID: 1
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:91] Turno actualizado: up.edu.microservicios.dto.TurnoDTO@289fff3c
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:98] Eliminando turno: 1
+[2025-11-13 22:01:24] [ INFO ] [TurnoController:38] Buscando turno por ID: 1

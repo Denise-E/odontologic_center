@@ -143,4 +143,57 @@ public class IntegrationTestService {
         String contenido = respuesta.getResponse().getContentAsString();
         assertFalse(contenido.isEmpty());
     }
+
+    @Test
+    @Order(10)
+    public void buscarTurnoPorId() throws Exception {
+        MvcResult respuesta = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/turnos/1")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print()
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        ).andReturn();
+        
+        String contenido = respuesta.getResponse().getContentAsString();
+        assertFalse(contenido.isEmpty());        
+    }
+
+    @Test
+    @Order(11)
+    public void actualizarTurno() throws Exception {
+        // Actualizar el turno a una nueva fecha (2026-01-17 es sábado, usemos 2026-01-20 lunes)
+        String turnoActualizado = "{\"id\":1,\"pacienteId\":1,\"odontologoId\":1,\"fecha\":\"2026-01-20T15:00:00\"}";
+        
+        MvcResult respuesta = mockMvc.perform(
+                MockMvcRequestBuilders.put("/api/turnos/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(turnoActualizado)
+        ).andDo(MockMvcResultHandlers.print()
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        ).andReturn();
+        
+        String contenido = respuesta.getResponse().getContentAsString();
+        assertFalse(contenido.isEmpty());
+        assertTrue(contenido.contains("2026-01-20"), "La fecha debe estar actualizada");
+    }
+
+    @Test
+    @Order(12)
+    public void eliminarTurno() throws Exception {
+        MvcResult respuesta = mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/turnos/1")
+        ).andDo(MockMvcResultHandlers.print()
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        ).andReturn();
+        
+        String contenido = respuesta.getResponse().getContentAsString();
+        assertTrue(contenido.contains("Turno eliminado exitosamente"), "Debe contener mensaje de éxito");
+        
+        // Verificar que el turno fue eliminado
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/turnos/1")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
 }
