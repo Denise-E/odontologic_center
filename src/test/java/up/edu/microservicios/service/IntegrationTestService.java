@@ -93,4 +93,54 @@ public class IntegrationTestService {
         assertNotNull(pacienteBuscado.get());
         assertEquals("Jorge", pacienteBuscado.get().getNombre());
     }
+
+    @Test
+    @Order(6)
+    public void buscarTurnosPorPaciente() throws Exception {
+        MvcResult respuesta = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/turnos/paciente/1")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print()
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        ).andReturn();
+        
+        assertFalse(respuesta.getResponse().getContentAsString().isEmpty());
+    }
+
+    @Test
+    @Order(7)
+    public void buscarTurnosPorOdontologo() throws Exception {
+        MvcResult respuesta = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/turnos/odontologo/1")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print()
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        ).andReturn();
+        
+        assertFalse(respuesta.getResponse().getContentAsString().isEmpty());
+    }
+
+    @Test
+    @Order(8)
+    public void buscarOdontologoPorMatricula() throws Exception {
+        Optional<Odontologo> odontologo = odontologoService.buscarPorMatricula("M8288");
+        assertTrue(odontologo.isPresent());
+        assertEquals("Nancy", odontologo.get().getNombre());
+        assertEquals("Sik", odontologo.get().getApellido());
+        assertEquals(1, odontologo.stream().count());
+    }
+
+    @Test
+    @Order(9)
+    public void buscarPacientePorId() throws Exception {
+        MvcResult respuesta = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/pacientes/1")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(MockMvcResultHandlers.print()
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        ).andReturn();
+        
+        String contenido = respuesta.getResponse().getContentAsString();
+        assertFalse(contenido.isEmpty());
+    }
 }

@@ -857,3 +857,9 @@ DROP TABLE IF EXISTS DOMICILIOS [90107-232]
 [2025-11-13 21:23:11] [ INFO ] [TurnoController:55] Turnos encontrados: 0
 [2025-11-13 21:32:51] [ INFO ] [TurnoController:52] Buscando todos los turnos
 [2025-11-13 21:32:51] [ INFO ] [TurnoController:55] Turnos encontrados: 1
+[2025-11-13 21:40:30] [ INFO ] [TurnoController:52] Buscando todos los turnos
+[2025-11-13 21:40:30] [ INFO ] [TurnoController:55] Turnos encontrados: 1
+[2025-11-13 21:40:30] [ INFO ] [TurnoController:62] Buscando turnos del paciente ID: 1
+[2025-11-13 21:40:30] [ INFO ] [TurnoController:73] Buscando turnos del odontólogo ID: 1
+[2025-11-13 21:40:30] [ INFO ] [PacienteController:32] Buscando paciente por ID: 1
+[2025-11-13 21:40:30] [ INFO ] [PacienteController:35] Paciente encontrado: Optional[up.edu.microservicios.entity.Paciente@3eb4fdd5]
