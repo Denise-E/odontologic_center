@@ -2,7 +2,7 @@ package up.edu.microservicios.exception;
 
 /**
  * Excepción lanzada cuando una fecha no es válida para un turno
- * Ejemplos: fecha pasada, día no laborable, fecha null
+ * Ejemplos: fecha pasada o fecha null
  */
 public class InvalidDateException extends RuntimeException {
     
