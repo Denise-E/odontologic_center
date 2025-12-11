@@ -11,3 +11,4 @@ http://localhost:8080
 ---------------------- FINAL
 
     > http://localhost:8080/api/pacientes/2 - No retorna el mensaje definido para 404 ¿?
+    > Tests con camino no feliz

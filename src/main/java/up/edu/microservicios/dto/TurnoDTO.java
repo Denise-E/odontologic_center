@@ -17,7 +17,7 @@ public class TurnoDTO {
     private Integer pacienteId;
     private Integer odontologoId;
     
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm[:ss]")
     private LocalDateTime fecha;
     
     // Objetos completos para el frontend
